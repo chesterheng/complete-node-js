@@ -15,6 +15,7 @@
   - [**Section 4: File System and Command Line Args (Notes App)**](#section-4-file-system-and-command-line-args-notes-app)
     - [Getting Input from Users](#getting-input-from-users)
     - [Argument Parsing with Yargs](#argument-parsing-with-yargs)
+    - [Storing Data with JSON](#storing-data-with-json)
   - [**Section 5: Debugging Node.js (Notes Apps)**](#section-5-debugging-nodejs-notes-apps)
   - [**Section 6: Asynchronous Node.js (Weather App)**](#section-6-asynchronous-nodejs-weather-app)
   - [**Section 7: Web Servers (Weather App)**](#section-7-web-servers-weather-app)
@@ -203,6 +204,47 @@ node app.js add --title="My Note" --body="Interesting Lesson"
 ```
 
 **[⬆ back to top](#table-of-contents)**
+
+### Storing Data with JSON
+
+```javascript
+const book = {
+  title: 'Ego is the Enemy',
+  author: 'Ryan Holiday'
+}
+
+const bookJSON = JSON.stringify(book)
+const parseData = JSON.parse(bookJSON)
+```
+
+```json
+{
+  "title": "Ego is the Enemy",
+  "author": "Ryan Holiday"
+}
+```
+
+```javascript
+// const dataBuffer = fs.readFileSync('1-json.json')
+// const dataJSON = dataBuffer.toString()
+// const user = JSON.parse(dataJSON)
+
+const user = require('./1-json.json')
+user.name = 'Gunther'
+user.age = 54
+
+const userJSON = JSON.stringify(user, false, 2)
+fs.writeFileSync('1-json.json', userJSON)
+```
+
+```json
+{
+  "title": "Ego is the Enemy",
+  "author": "Ryan Holiday",
+  "name": "Gunther",
+  "age": 54
+}
+```
 
 ## **Section 5: Debugging Node.js (Notes Apps)**
 
