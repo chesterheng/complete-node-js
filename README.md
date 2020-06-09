@@ -739,6 +739,8 @@ Stopping
 
 ### Making HTTP Requests
 
+[weatherstack](https://weatherstack.com/documentation)
+
 ```javascript
 require('dotenv').config()
 const request = require('request')
@@ -749,6 +751,22 @@ const url = `http://api.weatherstack.com/current?access_key=${process.env.ACCESS
 request({ url: url }, (error, response) => {
   const data = JSON.parse(response.body)
   console.log(data.current)
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+Customizing HTTP Requests
+
+```javascript
+require('dotenv').config()
+const request = require('request')
+
+const country = "Singapore"
+const url = `http://api.weatherstack.com/current?access_key=${process.env.ACCESS_KEY}&query=${country}`
+
+request({ url: url, json: true }, (error, response) => {
+  console.log(`${response.body.current.weather_descriptions[0]} It is currently ${response.body.current.temperature} degress out. There is a ${response.body.current.precip * 100}% chance of rain.`)
 })
 ```
 
