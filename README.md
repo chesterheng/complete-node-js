@@ -6,7 +6,6 @@
   - [Table of Contents](#table-of-contents)
   - [**Section 1: Welcome**](#section-1-welcome)
   - [**Section 2: Installing and Exploring Node.js**](#section-2-installing-and-exploring-nodejs)
-    - [What is Node.js?](#what-is-nodejs)
   - [**Section 3: Node.js Module System (Notes App)**](#section-3-nodejs-module-system-notes-app)
     - [Importing Node.js Core Modules](#importing-nodejs-core-modules)
     - [Importing Your Own Files](#importing-your-own-files)
@@ -25,6 +24,9 @@
   - [**Section 5: Debugging Node.js (Notes Apps)**](#section-5-debugging-nodejs-notes-apps)
     - [Debugging Node.js](#debugging-nodejs)
   - [**Section 6: Asynchronous Node.js (Weather App)**](#section-6-asynchronous-nodejs-weather-app)
+    - [Asynchronous Basics](#asynchronous-basics)
+    - [Call Stack, Callback Queue, and Event Loop](#call-stack-callback-queue-and-event-loop)
+    - [Making HTTP Requests](#making-http-requests)
   - [**Section 7: Web Servers (Weather App)**](#section-7-web-servers-weather-app)
   - [**Section 8: Accessing API from Browser (Weather App)**](#section-8-accessing-api-from-browser-weather-app)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
@@ -46,13 +48,6 @@
 **[⬆ back to top](#table-of-contents)**
 
 ## **Section 2: Installing and Exploring Node.js**
-
-### What is Node.js?
-
-- Asynchronous
-- Non-blocking
-- Single Threaded
-- Event Driven
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -702,11 +697,9 @@ node app.js read --title="Frontend 3"
 [Debugger](https://nodejs.org/api/debugger.html)
 
 ```javascript
-console.log('Hello')
-
+console.log('Start debugger')
 debugger
-
-console.log('Hello')
+console.log('Stop debugger')
 ```
 
 ```console
@@ -718,6 +711,46 @@ Visit chrome://inspect in the Chromr browser
 **[⬆ back to top](#table-of-contents)**
 
 ## **Section 6: Asynchronous Node.js (Weather App)**
+
+- Asynchronous
+- Non-blocking
+- Single Threaded
+- Event Driven
+
+### Asynchronous Basics
+
+```javascript
+console.log('Starting')
+setTimeout(() => console.log('2 Second Timer'), 2000)
+setTimeout(() => console.log('0 Second Timer'), 0)
+console.log('Stopping')
+```
+
+Starting
+Stopping
+0 Second Timer
+2 Second Timer
+
+**[⬆ back to top](#table-of-contents)**
+
+### Call Stack, Callback Queue, and Event Loop
+
+**[⬆ back to top](#table-of-contents)**
+
+### Making HTTP Requests
+
+```javascript
+require('dotenv').config()
+const request = require('request')
+
+const country = "Singapore"
+const url = `http://api.weatherstack.com/current?access_key=${process.env.ACCESS_KEY}&query=${country}`
+
+request({ url: url }, (error, response) => {
+  const data = JSON.parse(response.body)
+  console.log(data.current)
+})
+```
 
 **[⬆ back to top](#table-of-contents)**
 
