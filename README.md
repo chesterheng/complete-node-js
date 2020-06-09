@@ -17,6 +17,7 @@
     - [Argument Parsing with Yargs](#argument-parsing-with-yargs)
     - [Storing Data with JSON](#storing-data-with-json)
     - [Adding a Note](#adding-a-note)
+    - [Removing a Note](#removing-a-note)
   - [**Section 5: Debugging Node.js (Notes Apps)**](#section-5-debugging-nodejs-notes-apps)
   - [**Section 6: Asynchronous Node.js (Weather App)**](#section-6-asynchronous-nodejs-weather-app)
   - [**Section 7: Web Servers (Weather App)**](#section-7-web-servers-weather-app)
@@ -350,6 +351,66 @@ module.exports = {
 node app.js add --title="Frontend 1" --body="React"
 node app.js add --title="Frontend 2" --body="Vue"
 node app.js add --title="Frontend 3" --body="Angular"
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Removing a Note
+
+```javascript
+// notes.js
+const chalk = require('chalk')
+...
+const removeNote = title => {
+  const notes = loadNotes()
+  const notesToKeep = notes.filter(function (note) {
+    return note.title !== title
+  })
+
+  if (notes.length > notesToKeep.length) {
+    console.log(chalk.green.inverse('Note removed!'))
+    saveNotes(notesToKeep)
+  } else {
+    console.log(chalk.red.inverse('No note found!'))
+  }    
+}
+
+module.exports = {
+  getNotes,
+  addNote,
+  removeNote
+}
+```
+
+```javascript
+// app.js
+const yargs = require('yargs')
+const notes = require('./notes.js')
+...
+// Create remove command
+yargs.command({
+  command: 'remove',
+  describe: 'Remove a note',
+  builder: {
+    title: {
+      describe: 'Note title',
+      demandOption: true,
+      type: 'string'
+    }
+  },
+  handler: function (argv) {
+    notes.removeNote(argv.title)
+  }
+})
+
+yargs.parse()
+```
+
+```console
+node app.js add --title="Frontend 1" --body="React"
+node app.js add --title="Frontend 2" --body="Vue"
+node app.js add --title="Frontend 3" --body="Angular"
+node app.js remove --title="Frontend 3"
 ```
 
 **[⬆ back to top](#table-of-contents)**
