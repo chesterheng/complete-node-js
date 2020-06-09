@@ -6,11 +6,12 @@
   - [Table of Contents](#table-of-contents)
   - [**Section 1: Welcome**](#section-1-welcome)
   - [**Section 2: Installing and Exploring Node.js**](#section-2-installing-and-exploring-nodejs)
+  - [**Section 3: Node.js Module System (Notes App)**](#section-3-nodejs-module-system-notes-app)
     - [Importing Node.js Core Modules](#importing-nodejs-core-modules)
     - [Importing Your Own Files](#importing-your-own-files)
     - [Importing npm Modules](#importing-npm-modules)
     - [Printing in Color](#printing-in-color)
-  - [**Section 3: Node.js Module System (Notes App)**](#section-3-nodejs-module-system-notes-app)
+    - [Global npm Modules and nodemon](#global-npm-modules-and-nodemon)
   - [**Section 4: File System and Command Line Args (Notes App)**](#section-4-file-system-and-command-line-args-notes-app)
   - [**Section 5: Debugging Node.js (Notes Apps)**](#section-5-debugging-nodejs-notes-apps)
   - [**Section 6: Asynchronous Node.js (Weather App)**](#section-6-asynchronous-nodejs-weather-app)
@@ -35,6 +36,10 @@
 **[⬆ back to top](#table-of-contents)**
 
 ## **Section 2: Installing and Exploring Node.js**
+
+**[⬆ back to top](#table-of-contents)**
+
+## **Section 3: Node.js Module System (Notes App)**
 
 ### Importing Node.js Core Modules
 
@@ -68,6 +73,7 @@ const msg = getNotes()
 
 ```console
 npm init -y
+npm i validator
 ```
 
 ```javascript
@@ -79,6 +85,10 @@ console.log(validator.isURL('https://mead.io/'))
 
 ### Printing in Color
 
+```console
+npm i chalk
+```
+
 ```javascript
 const chalk = require('chalk')
 const greenMsg = chalk.green.inverse.bold('Success!')
@@ -86,7 +96,11 @@ const greenMsg = chalk.green.inverse.bold('Success!')
 
 **[⬆ back to top](#table-of-contents)**
 
-## **Section 3: Node.js Module System (Notes App)**
+### Global npm Modules and nodemon
+
+```console
+npm i -g nodemon
+```
 
 **[⬆ back to top](#table-of-contents)**
 

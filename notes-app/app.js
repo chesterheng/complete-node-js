@@ -11,5 +11,5 @@ console.log(msg)
 
 console.log(validator.isURL('https://mead.io/')) 
 
-const greenMsg = chalk.green.inverse.bold('Success!')
+const greenMsg = chalk.blue.inverse.bold('Success!')
 console.log(greenMsg) 
