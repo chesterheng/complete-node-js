@@ -19,6 +19,7 @@
     - [Adding a Note](#adding-a-note)
     - [Removing a Note](#removing-a-note)
     - [ES6 Aside: Arrow Functions](#es6-aside-arrow-functions)
+    - [Refactoring to Use Arrow Functions](#refactoring-to-use-arrow-functions)
   - [**Section 5: Debugging Node.js (Notes Apps)**](#section-5-debugging-nodejs-notes-apps)
   - [**Section 6: Asynchronous Node.js (Weather App)**](#section-6-asynchronous-nodejs-weather-app)
   - [**Section 7: Web Servers (Weather App)**](#section-7-web-servers-weather-app)
@@ -455,6 +456,140 @@ const tasks = {
   }
 }
 tasks.getTasksToDo()
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Refactoring to Use Arrow Functions
+
+```javascript
+// app.js
+const yargs = require('yargs')
+const notes = require('./notes.js')
+
+// Create add command
+yargs.command({
+  command: 'add',
+  describe: 'Add a new note',
+  builder: {
+    title: {
+      describe: 'Note title',
+      demandOption: true,
+      type: 'string'
+    },
+    body: {
+      describe: 'Note body',
+      demandOption: true,
+      type: 'string'
+    }
+  },
+  handler(argv) {
+    notes.addNote(argv.title, argv.body)
+  }
+})
+
+// Create remove command
+yargs.command({
+  command: 'remove',
+  describe: 'Remove a note',
+  builder: {
+    title: {
+      describe: 'Note title',
+      demandOption: true,
+      type: 'string'
+    }
+  },
+  handler(argv) {
+    notes.removeNote(argv.title)
+  }
+})
+
+// Create list command
+yargs.command({
+  command: 'list',
+  describe: 'List your notes',
+  handler() {
+    console.log('Listing out all notes')
+  }
+})
+
+// Create read command
+yargs.command({
+  command: 'read',
+  describe: 'Read a note',
+  handler() {
+    console.log('Reading a note')
+  }
+})
+
+console.log(yargs.argv)
+yargs.parse()
+```
+
+```javascript
+// notes.js
+const fs = require('fs')
+const chalk = require('chalk')
+const getNotes = () => 'Your notes...'
+
+const addNote = (title, body) => {
+  const notes = loadNotes()
+  const duplicateNotes = notes.filter(note => note.title === title)
+
+  if (duplicateNotes.length === 0) {
+    notes.push({
+      title: title,
+      body: body
+    })
+    saveNotes(notes)
+    console.log(chalk.green.inverse('New note added!'))
+  } else {
+    console.log(chalk.red.inverse('Note title taken!'))
+  }
+}
+
+const removeNote = title => {
+  const notes = loadNotes()
+  const notesToKeep = notes.filter(function (note) {
+    return note.title !== title
+  })
+
+  if (notes.length > notesToKeep.length) {
+    console.log(chalk.green.inverse('Note removed!'))
+    saveNotes(notesToKeep)
+  } else {
+    console.log(chalk.red.inverse('No note found!'))
+  }    
+}
+
+const saveNotes = notes => {
+  const dataJSON = JSON.stringify(notes, false, 2)
+  fs.writeFileSync('notes.json', dataJSON)
+}
+
+const loadNotes = () => {
+  try {
+    // const dataBuffer = fs.readFileSync('notes.json')
+    // const dataJSON = dataBuffer.toString()
+    // return JSON.parse(dataJSON)
+    return require('./notes.json')
+  } catch (e) {
+    return []
+  }
+}
+
+module.exports = {
+  getNotes,
+  addNote,
+  removeNote
+}
+```
+
+```console
+node app.js add --title="Frontend 1" --body="React"
+node app.js add --title="Frontend 2" --body="Vue"
+node app.js add --title="Frontend 3" --body="Angular"
+node app.js remove --title="Frontend 3"
 ```
 
 **[⬆ back to top](#table-of-contents)**
