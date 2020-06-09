@@ -20,6 +20,7 @@
     - [Removing a Note](#removing-a-note)
     - [ES6 Aside: Arrow Functions](#es6-aside-arrow-functions)
     - [Refactoring to Use Arrow Functions](#refactoring-to-use-arrow-functions)
+    - [Reading a Note](#reading-a-note)
   - [**Section 5: Debugging Node.js (Notes Apps)**](#section-5-debugging-nodejs-notes-apps)
   - [**Section 6: Asynchronous Node.js (Weather App)**](#section-6-asynchronous-nodejs-weather-app)
   - [**Section 7: Web Servers (Weather App)**](#section-7-web-servers-weather-app)
@@ -550,9 +551,7 @@ const addNote = (title, body) => {
 
 const removeNote = title => {
   const notes = loadNotes()
-  const notesToKeep = notes.filter(function (note) {
-    return note.title !== title
-  })
+  const notesToKeep = notes.filter(note => note.title !== title)
 
   if (notes.length > notesToKeep.length) {
     console.log(chalk.green.inverse('Note removed!'))
@@ -569,9 +568,6 @@ const saveNotes = notes => {
 
 const loadNotes = () => {
   try {
-    // const dataBuffer = fs.readFileSync('notes.json')
-    // const dataJSON = dataBuffer.toString()
-    // return JSON.parse(dataJSON)
     return require('./notes.json')
   } catch (e) {
     return []
@@ -605,10 +601,7 @@ const listNotes = () => {
   const notes = loadNotes()
 
   console.log(chalk.inverse('Your notes'))
-
-  notes.forEach((note) => {
-      console.log(note.title)
-  })
+  notes.forEach(note => console.log(note.title))
 }
 
 module.exports = {
@@ -637,6 +630,61 @@ yargs.parse()
 ```console
 node app.js list
 ```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Reading a Note
+
+```javascript
+// app.js
+...
+// Create read command
+yargs.command({
+  command: 'read',
+  describe: 'Read a note',
+  builder: {
+    title: {
+      describe: 'Note title',
+      demandOption: true,
+      type: 'string'
+    }
+  },
+  handler(argv) {
+    notes.readNote(argv.title)
+  }
+})
+
+yargs.parse()
+```
+
+```javascript
+// notes.js
+const readNote = title => {
+  const notes = loadNotes()
+  const note = notes.find((note) => note.title === title)
+
+  if (note) {
+    console.log(chalk.inverse(note.title))
+    console.log(note.body)
+  } else {
+    console.log(chalk.red.inverse('Note not found!'))
+  }
+}
+
+module.exports = {
+  getNotes,
+  addNote,
+  removeNote,
+  listNotes,
+  readNote
+}
+```
+
+```console
+node app.js read --title="Frontend 3"
+```
+
+**[⬆ back to top](#table-of-contents)**
 
 ## **Section 5: Debugging Node.js (Notes Apps)**
 
