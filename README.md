@@ -9,6 +9,7 @@
     - [Importing Node.js Core Modules](#importing-nodejs-core-modules)
     - [Importing Your Own Files](#importing-your-own-files)
     - [Importing npm Modules](#importing-npm-modules)
+    - [Printing in Color](#printing-in-color)
   - [**Section 3: Node.js Module System (Notes App)**](#section-3-nodejs-module-system-notes-app)
   - [**Section 4: File System and Command Line Args (Notes App)**](#section-4-file-system-and-command-line-args-notes-app)
   - [**Section 5: Debugging Node.js (Notes Apps)**](#section-5-debugging-nodejs-notes-apps)
@@ -71,8 +72,16 @@ npm init -y
 
 ```javascript
 const validator = require('validator')
-
 console.log(validator.isURL('https://mead.io/')) 
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Printing in Color
+
+```javascript
+const chalk = require('chalk')
+const greenMsg = chalk.green.inverse.bold('Success!')
 ```
 
 **[⬆ back to top](#table-of-contents)**
