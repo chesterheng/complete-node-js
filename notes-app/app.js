@@ -13,3 +13,12 @@ console.log(validator.isURL('https://mead.io/'))
 
 const greenMsg = chalk.blue.inverse.bold('Success!')
 console.log(greenMsg) 
+
+console.log(process.argv)
+const command = process.argv[2]
+
+if (command === 'add') {
+  console.log('Adding note!')
+} else if (command === 'remove') {
+  console.log('Removing note!')
+}

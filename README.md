@@ -13,6 +13,7 @@
     - [Printing in Color](#printing-in-color)
     - [Global npm Modules and nodemon](#global-npm-modules-and-nodemon)
   - [**Section 4: File System and Command Line Args (Notes App)**](#section-4-file-system-and-command-line-args-notes-app)
+    - [Getting Input from Users](#getting-input-from-users)
   - [**Section 5: Debugging Node.js (Notes Apps)**](#section-5-debugging-nodejs-notes-apps)
   - [**Section 6: Asynchronous Node.js (Weather App)**](#section-6-asynchronous-nodejs-weather-app)
   - [**Section 7: Web Servers (Weather App)**](#section-7-web-servers-weather-app)
@@ -48,6 +49,10 @@ const fs = require('fs')
 
 fs.writeFileSync('notes.txt', 'My name is Chester.')
 fs.appendFileSync('notes.txt', ' I live in Singapore.')
+```
+
+```console
+node app.js
 ```
 
 **[⬆ back to top](#table-of-contents)**
@@ -100,11 +105,28 @@ const greenMsg = chalk.green.inverse.bold('Success!')
 
 ```console
 npm i -g nodemon
+nodemon app.js
 ```
 
 **[⬆ back to top](#table-of-contents)**
 
 ## **Section 4: File System and Command Line Args (Notes App)**
+
+### Getting Input from Users
+
+```javascript
+const command = process.argv[2]
+
+if (command === 'add') {
+  console.log('Adding note!')
+} else if (command === 'remove') {
+  console.log('Removing note!')
+}
+```
+
+```console
+node app.js add
+```
 
 **[⬆ back to top](#table-of-contents)**
 
