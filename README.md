@@ -30,6 +30,7 @@
     - [Customizing HTTP Requests](#customizing-http-requests)
     - [An HTTP Request Challenge](#an-http-request-challenge)
     - [Handling Errors](#handling-errors)
+    - [The Callback Function](#the-callback-function)
   - [**Section 7: Web Servers (Weather App)**](#section-7-web-servers-weather-app)
   - [**Section 8: Accessing API from Browser (Weather App)**](#section-8-accessing-api-from-browser-weather-app)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
@@ -838,6 +839,22 @@ request({ url: geocodeURL, json: true }, (error, response) => {
   }
 }) 
 ```
+
+**[⬆ back to top](#table-of-contents)**
+
+### The Callback Function
+
+```javascript
+setTimeout(() => console.log('Two seconds are up'), 2000)
+
+const geocode = (address, callback) =>
+  setTimeout(() => callback({ latitude: 0, longitude: 0 }), 2000)
+geocode('Philadelphia', data => console.log(data))
+
+const add = (a, b, callback) => setTimeout(() => callback(a + b), 2000)
+add(1, 4, sum => console.log(sum)) 
+```
+
 **[⬆ back to top](#table-of-contents)**
 
 ## **Section 7: Web Servers (Weather App)**
