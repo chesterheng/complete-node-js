@@ -6,6 +6,7 @@
   - [Table of Contents](#table-of-contents)
   - [**Section 1: Welcome**](#section-1-welcome)
   - [**Section 2: Installing and Exploring Node.js**](#section-2-installing-and-exploring-nodejs)
+    - [What is Node.js?](#what-is-nodejs)
   - [**Section 3: Node.js Module System (Notes App)**](#section-3-nodejs-module-system-notes-app)
     - [Importing Node.js Core Modules](#importing-nodejs-core-modules)
     - [Importing Your Own Files](#importing-your-own-files)
@@ -22,6 +23,7 @@
     - [Refactoring to Use Arrow Functions](#refactoring-to-use-arrow-functions)
     - [Reading a Note](#reading-a-note)
   - [**Section 5: Debugging Node.js (Notes Apps)**](#section-5-debugging-nodejs-notes-apps)
+    - [Debugging Node.js](#debugging-nodejs)
   - [**Section 6: Asynchronous Node.js (Weather App)**](#section-6-asynchronous-nodejs-weather-app)
   - [**Section 7: Web Servers (Weather App)**](#section-7-web-servers-weather-app)
   - [**Section 8: Accessing API from Browser (Weather App)**](#section-8-accessing-api-from-browser-weather-app)
@@ -44,6 +46,13 @@
 **[⬆ back to top](#table-of-contents)**
 
 ## **Section 2: Installing and Exploring Node.js**
+
+### What is Node.js?
+
+- Asynchronous
+- Non-blocking
+- Single Threaded
+- Event Driven
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -687,6 +696,24 @@ node app.js read --title="Frontend 3"
 **[⬆ back to top](#table-of-contents)**
 
 ## **Section 5: Debugging Node.js (Notes Apps)**
+
+### Debugging Node.js
+
+[Debugger](https://nodejs.org/api/debugger.html)
+
+```javascript
+console.log('Hello')
+
+debugger
+
+console.log('Hello')
+```
+
+```console
+node inspect app.js
+```
+
+Visit chrome://inspect in the Chromr browser
 
 **[⬆ back to top](#table-of-contents)**
 
