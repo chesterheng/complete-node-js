@@ -594,6 +594,50 @@ node app.js remove --title="Frontend 3"
 
 **[⬆ back to top](#table-of-contents)**
 
+Listing Notes
+
+```javascript
+// notes.js
+const fs = require('fs')
+const chalk = require('chalk')
+...
+const listNotes = () => {
+  const notes = loadNotes()
+
+  console.log(chalk.inverse('Your notes'))
+
+  notes.forEach((note) => {
+      console.log(note.title)
+  })
+}
+
+module.exports = {
+  getNotes,
+  addNote,
+  removeNote,
+  listNotes
+}
+```
+
+```javascript
+// app.js
+...
+// Create list command
+yargs.command({
+  command: 'list',
+  describe: 'List your notes',
+  handler() {
+    notes.listNotes()
+  }
+})
+
+yargs.parse()
+```
+
+```console
+node app.js list
+```
+
 ## **Section 5: Debugging Node.js (Notes Apps)**
 
 **[⬆ back to top](#table-of-contents)**
