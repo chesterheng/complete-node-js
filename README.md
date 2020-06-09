@@ -18,6 +18,7 @@
     - [Storing Data with JSON](#storing-data-with-json)
     - [Adding a Note](#adding-a-note)
     - [Removing a Note](#removing-a-note)
+    - [ES6 Aside: Arrow Functions](#es6-aside-arrow-functions)
   - [**Section 5: Debugging Node.js (Notes Apps)**](#section-5-debugging-nodejs-notes-apps)
   - [**Section 6: Asynchronous Node.js (Weather App)**](#section-6-asynchronous-nodejs-weather-app)
   - [**Section 7: Web Servers (Weather App)**](#section-7-web-servers-weather-app)
@@ -411,6 +412,49 @@ node app.js add --title="Frontend 1" --body="React"
 node app.js add --title="Frontend 2" --body="Vue"
 node app.js add --title="Frontend 3" --body="Angular"
 node app.js remove --title="Frontend 3"
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### ES6 Aside: Arrow Functions
+
+```javascript
+const event = {
+  name: 'Birthday Party',
+  guestList: ['Andrew', 'Jen', 'Mike'],
+  printGuestList() {
+    console.log('Guest list for ' + this.name)
+    this.guestList.forEach((guest) => {
+      console.log(guest + ' is attending ' + this.name)
+    })
+  }
+}
+```
+
+```javascript
+//
+// Goal: Create method to get incomplete tasks
+//
+// 1. Define getTasksToDo method
+// 2. Use filter to to return just the incompleted tasks (arrow function)
+// 3. Test your work by running the script
+
+const tasks = {
+  tasks: [{
+    text: 'Grocery shopping',
+    completed: true
+  }, {
+    text: 'Clean yard',
+    completed: false
+  }, {
+    text: 'Film course',
+    completed: false
+  }],
+  getTasksToDo() {
+    return this.tasks.filter(task => task.completed === false)
+  }
+}
+tasks.getTasksToDo()
 ```
 
 **[⬆ back to top](#table-of-contents)**
