@@ -7,6 +7,7 @@
   - [**Section 1: Welcome**](#section-1-welcome)
   - [**Section 2: Installing and Exploring Node.js**](#section-2-installing-and-exploring-nodejs)
     - [Importing Node.js Core Modules](#importing-nodejs-core-modules)
+    - [Importing Your Own Files](#importing-your-own-files)
   - [**Section 3: Node.js Module System (Notes App)**](#section-3-nodejs-module-system-notes-app)
   - [**Section 4: File System and Command Line Args (Notes App)**](#section-4-file-system-and-command-line-args-notes-app)
   - [**Section 5: Debugging Node.js (Notes Apps)**](#section-5-debugging-nodejs-notes-apps)
@@ -40,6 +41,21 @@ const fs = require('fs')
 
 fs.writeFileSync('notes.txt', 'My name is Chester.')
 fs.appendFileSync('notes.txt', ' I live in Singapore.')
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Importing Your Own Files
+
+```javascript
+const getNotes = () => 'Your notes...'
+
+module.exports = getNotes 
+```
+
+```javascript
+const getNotes = require('./notes.js')
+const msg = getNotes()
 ```
 
 **[⬆ back to top](#table-of-contents)**
