@@ -11,6 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "request": "^2.88.2"
+    "postman-request": "^2.88.1-postman.23"
   }
 }

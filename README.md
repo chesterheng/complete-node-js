@@ -28,9 +28,10 @@
     - [Call Stack, Callback Queue, and Event Loop](#call-stack-callback-queue-and-event-loop)
     - [Making HTTP Requests](#making-http-requests)
     - [Customizing HTTP Requests](#customizing-http-requests)
-    - [An HTTP Request Challenge](#an-http-request-challenge)
+    - [An HTTP Request](#an-http-request)
     - [Handling Errors](#handling-errors)
     - [The Callback Function](#the-callback-function)
+    - [Callback Abstraction](#callback-abstraction)
   - [**Section 7: Web Servers (Weather App)**](#section-7-web-servers-weather-app)
   - [**Section 8: Accessing API from Browser (Weather App)**](#section-8-accessing-api-from-browser-weather-app)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
@@ -743,7 +744,9 @@ Stopping
 
 ### Making HTTP Requests
 
-[weatherstack](https://weatherstack.com/documentation)
+- [request](https://github.com/request/request)
+- [postman-request](https://github.com/postmanlabs/postman-request#readme)
+- [weatherstack](https://weatherstack.com/documentation)
 
 ```javascript
 require('dotenv').config()
@@ -779,7 +782,7 @@ request({ url: url, json: true }, (error, response) => {
 
 **[⬆ back to top](#table-of-contents)**
 
-### An HTTP Request Challenge
+### An HTTP Request
 
 ```javascript
 require('dotenv').config()
@@ -853,6 +856,80 @@ geocode('Philadelphia', data => console.log(data))
 
 const add = (a, b, callback) => setTimeout(() => callback(a + b), 2000)
 add(1, 4, sum => console.log(sum)) 
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Callback Abstraction
+
+```javascript
+// app.js
+require('dotenv').config()
+const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
+
+geocode('Singapore', (error, data) => {
+  console.log('Error', error)
+  console.log('Data', data)
+})
+
+forecast(1.3, 103.8, (error, data) => {
+  console.log('Error', error)
+  console.log('Data', data)
+})
+```
+
+```javascript
+// geocode.js
+const request = require('postman-request');
+
+const geocode = (address, callback) => {  
+  const accessToken = process.env.MAPBOX_ACCESS_TOKEN
+  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${accessToken}`
+
+  request({ url, json: true }, (error, response, body) => {
+    if (error || response.statusCode !== 200) {
+      callback('Unable to connect to location services!', undefined)
+    }
+    else if (body.features.length === 0) {
+      callback('Unable to find location. Try another search.', undefined)
+    }
+    else {
+      const latitude = body.features[0].center[1]
+      const longitude = body.features[0].center[0]
+      const location = body.features[0].place_name
+      callback(undefined, { 
+        latitude, 
+        longitude,
+        location
+      })
+    }
+  }) 
+}
+
+module.exports = geocode
+```
+
+```javascript
+// forecast.js
+const request = require('postman-request');
+
+const forecast = (latitude, longitude, callback) => {
+  const accessKey = process.env.WEATHER_STACK_ACCESS_KEY
+  const url = `http://api.weatherstack.com/current?access_key=${accessKey}&query=${latitude},${longitude}`
+
+  request({ url, json: true }, (error, response, body) => {
+    if (error || response.statusCode !== 200) {
+      callback('Unable to connect to weather service!', undefined)
+    } else if (body.error) {
+      callback('Unable to find location', undefined)
+    } else {
+      callback(undefined, `${body.current.weather_descriptions[0]} It is currently ${body.current.temperature} degress out. There is a ${body.current.precip * 100}% chance of rain.`)
+    }
+  })
+}
+
+module.exports = forecast
 ```
 
 **[⬆ back to top](#table-of-contents)**
