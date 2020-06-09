@@ -1,11 +1,12 @@
 const fs = require('fs')
 const validator = require('validator')
 const chalk = require('chalk')
-const getNotes = require('./notes.js')
+const yargs = require('./yargs')
 
 fs.writeFileSync('notes.txt', 'My name is Chester.')
 fs.appendFileSync('notes.txt', ' I live in Singapore.')
 
+const getNotes = require('./notes.js')
 const msg = getNotes()
 console.log(msg) 
 
@@ -22,3 +23,6 @@ if (command === 'add') {
 } else if (command === 'remove') {
   console.log('Removing note!')
 }
+
+console.log(yargs.argv)
+yargs.parse()

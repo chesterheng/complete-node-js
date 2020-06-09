@@ -14,6 +14,7 @@
     - [Global npm Modules and nodemon](#global-npm-modules-and-nodemon)
   - [**Section 4: File System and Command Line Args (Notes App)**](#section-4-file-system-and-command-line-args-notes-app)
     - [Getting Input from Users](#getting-input-from-users)
+    - [Argument Parsing with Yargs](#argument-parsing-with-yargs)
   - [**Section 5: Debugging Node.js (Notes Apps)**](#section-5-debugging-nodejs-notes-apps)
   - [**Section 6: Asynchronous Node.js (Weather App)**](#section-6-asynchronous-nodejs-weather-app)
   - [**Section 7: Web Servers (Weather App)**](#section-7-web-servers-weather-app)
@@ -126,6 +127,79 @@ if (command === 'add') {
 
 ```console
 node app.js add
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Argument Parsing with Yargs
+
+```javascript
+const yargs = require('yargs')
+
+// Create add command
+yargs.command({
+  command: 'add',
+  describe: 'Add a new note',
+  builder: {
+    title: {
+      describe: 'Note title',
+      demandOption: true,
+      type: 'string'
+    },
+    body: {
+      describe: 'Note body',
+      demandOption: true,
+      type: 'string'
+    }
+  },
+  handler: function (argv) {
+    console.log('Title: ' + argv.title)
+    console.log('Body: ' + argv.body)
+  }
+})
+
+// Create remove command
+yargs.command({
+  command: 'remove',
+  describe: 'Remove a note',
+  handler: function () {
+      console.log('Removing the note')
+  }
+})
+
+// Create list command
+yargs.command({
+  command: 'list',
+  describe: 'List your notes',
+  handler: function () {
+      console.log('Listing out all notes')
+  }
+})
+
+// Create read command
+yargs.command({
+  command: 'read',
+  describe: 'Read a note',
+  handler: function () {
+      console.log('Reading a note')
+  }
+})
+
+module.exports = yargs 
+```
+
+```javascript
+const yargs = require('./yargs')
+console.log(yargs.argv)
+yargs.parse()
+```
+
+```console
+node app.js add
+node app.js remove
+node app.js list
+node app.js read
+node app.js add --title="My Note" --body="Interesting Lesson"
 ```
 
 **[⬆ back to top](#table-of-contents)**
