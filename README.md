@@ -8,6 +8,7 @@
   - [**Section 2: Installing and Exploring Node.js**](#section-2-installing-and-exploring-nodejs)
     - [Importing Node.js Core Modules](#importing-nodejs-core-modules)
     - [Importing Your Own Files](#importing-your-own-files)
+    - [Importing npm Modules](#importing-npm-modules)
   - [**Section 3: Node.js Module System (Notes App)**](#section-3-nodejs-module-system-notes-app)
   - [**Section 4: File System and Command Line Args (Notes App)**](#section-4-file-system-and-command-line-args-notes-app)
   - [**Section 5: Debugging Node.js (Notes Apps)**](#section-5-debugging-nodejs-notes-apps)
@@ -47,6 +48,8 @@ fs.appendFileSync('notes.txt', ' I live in Singapore.')
 
 ### Importing Your Own Files
 
+[Introduction to CommonJS](https://flaviocopes.com/commonjs/)
+
 ```javascript
 const getNotes = () => 'Your notes...'
 
@@ -56,6 +59,20 @@ module.exports = getNotes
 ```javascript
 const getNotes = require('./notes.js')
 const msg = getNotes()
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Importing npm Modules
+
+```console
+npm init -y
+```
+
+```javascript
+const validator = require('validator')
+
+console.log(validator.isURL('https://mead.io/')) 
 ```
 
 **[⬆ back to top](#table-of-contents)**
