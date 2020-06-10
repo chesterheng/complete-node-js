@@ -32,6 +32,7 @@
     - [Handling Errors](#handling-errors)
     - [The Callback Function](#the-callback-function)
     - [Callback Abstraction](#callback-abstraction)
+    - [Callback Chaining](#callback-chaining)
   - [**Section 7: Web Servers (Weather App)**](#section-7-web-servers-weather-app)
   - [**Section 8: Accessing API from Browser (Weather App)**](#section-8-accessing-api-from-browser-weather-app)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
@@ -930,6 +931,37 @@ const forecast = (latitude, longitude, callback) => {
 }
 
 module.exports = forecast
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Callback Chaining
+
+```javascript
+require('dotenv').config()
+const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
+
+const address = process.argv[2]
+
+if (!address) {
+    console.log('Please provide an address')
+} else {
+  geocode(address, (error, { latitude, longitude, location }) => {
+    if (error) {
+      return console.log(error)
+    }
+
+    forecast(latitude, longitude, (error, forecastData) => {
+      if (error) {
+        return console.log(error)
+      }
+
+      console.log(location)
+      console.log(forecastData)
+    })
+  })
+}
 ```
 
 **[⬆ back to top](#table-of-contents)**
