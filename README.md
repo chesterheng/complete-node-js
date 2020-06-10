@@ -36,6 +36,7 @@
     - [HTTP Requests Without a Library](#http-requests-without-a-library)
   - [**Section 7: Web Servers (Weather App)**](#section-7-web-servers-weather-app)
     - [Hello Express](#hello-express)
+    - [Serving up HTML and JSON](#serving-up-html-and-json)
   - [**Section 8: Accessing API from Browser (Weather App)**](#section-8-accessing-api-from-browser-weather-app)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
@@ -1050,6 +1051,28 @@ app.get('', (req, res) => res.send('Hello express!'))
 app.get('/help', (req, res) => res.send('Help page'))
 app.get('/about', (req, res) => res.send('About'))
 app.get('/weather', (req, res) => res.send('Your weather'))
+
+app.listen(3000, () => console.log('Server is up on port 3000.'))
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Serving up HTML and JSON
+
+```javascript
+const express = require('express')
+
+const app = express()
+
+app.get('', (req, res) => res.send('<h1>Weather</h1>'))
+app.get('/help', (req, res) => res.send([
+  { name: 'Andrew' }, { name: 'Sarah'}
+]))
+app.get('/about', (req, res) => res.send('<h1>About</h1>'))
+app.get('/weather', (req, res) => res.send({
+  forecast: 'It is sunny',
+  location: 'Singapore'
+}))
 
 app.listen(3000, () => console.log('Server is up on port 3000.'))
 ```
