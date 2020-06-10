@@ -44,6 +44,7 @@
     - [Advanced Templating](#advanced-templating)
     - [404 Pages](#404-pages)
   - [**Section 8: Accessing API from Browser (Weather App)**](#section-8-accessing-api-from-browser-weather-app)
+    - [The Query String](#the-query-string)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
   - [**Section 11: REST APIs and Mongoose (Task App)**](#section-11-rest-apis-and-mongoose-task-app)
@@ -1422,6 +1423,43 @@ app.listen(3000, () => console.log('Server is up on port 3000.'))
 **[⬆ back to top](#table-of-contents)**
 
 ## **Section 8: Accessing API from Browser (Weather App)**
+
+### The Query String
+
+```javascript
+// app.js
+...
+app.get('/weather', (req, res) => {
+  if (!req.query.address) {
+    return res.send({
+      error: 'You must provide an address!'
+    })
+  }
+  
+  res.send({
+    forecast: 'It is sunny',
+    location: 'Singapore',
+    address: req.query.address
+  })
+})
+
+app.get('/products', (req, res) => {
+  if (!req.query.search) {
+    return res.send({
+      error: 'You must provide a search term'
+    })
+  }
+  
+  res.send({
+    products: []
+  })
+})
+```
+
+Chrome Browser
+
+- http://localhost:3000/weather?search=Singapore
+- http://localhost:3000/products?search=games
 
 **[⬆ back to top](#table-of-contents)**
 
