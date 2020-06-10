@@ -39,6 +39,8 @@
     - [Serving up HTML and JSON](#serving-up-html-and-json)
     - [Serving up Static Assets](#serving-up-static-assets)
     - [Serving up CSS, JS, Images, and More](#serving-up-css-js-images-and-more)
+    - [Dynamic Pages with Templating](#dynamic-pages-with-templating)
+    - [Dynamic Pages with Templating](#dynamic-pages-with-templating-1)
   - [**Section 8: Accessing API from Browser (Weather App)**](#section-8-accessing-api-from-browser-weather-app)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
@@ -1143,6 +1145,82 @@ web-server
   - css
   - img
 - src
+
+**[⬆ back to top](#table-of-contents)**
+
+### Dynamic Pages with Templating
+
+web-server
+
+- public (exposed by the web server)
+  - css
+  - img
+- src
+- views (contains .hbs files)
+
+```javascript
+// app.js
+const express = require('express')
+const path = require('path')
+
+const app = express()
+
+const publicDirectoryPath = path.join(__dirname, '../public')
+app.use(express.static(publicDirectoryPath))
+
+app.set('view engine', 'hbs')
+
+app.get('', (req, res) => {
+  res.render('index', {
+    title: 'Weather',
+    name: 'Andrew Mead'
+  })
+})
+
+app.get('/about', (req, res) => {
+  res.render('about', {
+    title: 'About Me',
+    name: 'Andrew Mead'
+  })
+})
+
+app.get('/help', (req, res) => {
+  res.render('help', {
+    helpText: 'This is some helpful text.'
+  })
+})
+
+app.get('/weather', (req, res) => res.send({
+  forecast: 'It is sunny',
+  location: 'Singapore'
+}))
+
+app.listen(3000, () => console.log('Server is up on port 3000.'))
+```
+
+```html
+<!-- index.hbs -->
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <h1>{{title}}</h1>
+    <p>Created by {{name}}</p>
+</body>
+
+</html> 
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Dynamic Pages with Templating
+
+[hbs](https://github.com/pillarjs/hbs)
 
 **[⬆ back to top](#table-of-contents)**
 
