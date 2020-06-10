@@ -38,6 +38,7 @@
     - [Hello Express](#hello-express)
     - [Serving up HTML and JSON](#serving-up-html-and-json)
     - [Serving up Static Assets](#serving-up-static-assets)
+    - [Serving up CSS, JS, Images, and More](#serving-up-css-js-images-and-more)
   - [**Section 8: Accessing API from Browser (Weather App)**](#section-8-accessing-api-from-browser-weather-app)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
@@ -1043,9 +1044,13 @@ request.end()
 
 ### Hello Express
 
+web-server
+
+- src
+
+
 ```javascript
 const express = require('express')
-
 const app = express()
 
 app.get('', (req, res) => res.send('Hello express!'))
@@ -1056,13 +1061,16 @@ app.get('/weather', (req, res) => res.send('Your weather'))
 app.listen(3000, () => console.log('Server is up on port 3000.'))
 ```
 
+```console
+nodemon src/app.js
+```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Serving up HTML and JSON
 
 ```javascript
 const express = require('express')
-
 const app = express()
 
 // route
@@ -1092,7 +1100,7 @@ Chrome Browser
 
 web-server
 
-- public
+- public (exposed by the web server)
 - src
 
 ```javascript
@@ -1124,6 +1132,17 @@ Chrome Browser
 - http://localhost:3000/help.html
 - http://localhost:3000/about.html
 - http://localhost:3000/weather
+
+**[⬆ back to top](#table-of-contents)**
+
+### Serving up CSS, JS, Images, and More
+
+web-server
+
+- public (exposed by the web server)
+  - css
+  - img
+- src
 
 **[⬆ back to top](#table-of-contents)**
 
