@@ -47,6 +47,7 @@
     - [The Query String](#the-query-string)
     - [Building a JSON HTTP Endpoint](#building-a-json-http-endpoint)
     - [ES6 Aside: Default Function Parameters](#es6-aside-default-function-parameters)
+    - [Browser HTTP Requests with Fetch](#browser-http-requests-with-fetch)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
   - [**Section 11: REST APIs and Mongoose (Task App)**](#section-11-rest-apis-and-mongoose-task-app)
@@ -1505,6 +1506,61 @@ app.get('/weather', (req, res) => {
 // app.js
 geocode(req.query.address, (error, { latitude, longitude, location } = {}) => {
     ...
+  })
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Browser HTTP Requests with Fetch
+
+web-server
+
+- public (exposed by the web server)
+  - css
+  - img
+  - js (make http request from frontend)
+- src
+- templates (contains .hbs files)
+  - partials
+  - views
+
+```hbs
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Weather</title>
+    <link rel="icon" href="/img/weather.png">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/app.js"></script>
+</head>
+
+<body>
+    <div class="main-content">
+        {{>header}}
+        <p>Use this site to get your weather!</p>
+    </div>
+    
+    {{>footer}}
+</body>
+
+</html> 
+```
+
+```javascript
+// public/js/app.js
+console.log('Client side javascript file is loaded!')
+
+fetch('http://localhost:3000/weather?address=!').then(response => {
+  response.json().then((data) => {
+    if (data.error) {
+      console.log(data.error)
+    } else {
+      console.log(data.location)
+      console.log(data.forecast)
+    }
   })
 })
 ```
