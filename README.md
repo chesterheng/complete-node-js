@@ -49,6 +49,7 @@
     - [ES6 Aside: Default Function Parameters](#es6-aside-default-function-parameters)
     - [Browser HTTP Requests with Fetch](#browser-http-requests-with-fetch)
     - [Creating a Search Form](#creating-a-search-form)
+    - [Wiring up the User Interface](#wiring-up-the-user-interface)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
   - [**Section 11: REST APIs and Mongoose (Task App)**](#section-11-rest-apis-and-mongoose-task-app)
@@ -1622,6 +1623,73 @@ weatherForm.addEventListener('submit', event => {
       })
     })
 })
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Wiring up the User Interface
+
+```javascript
+// public/js/app.js
+console.log('Client side javascript file is loaded!')
+
+const weatherForm = document.querySelector('form')
+const search = document.querySelector('input')
+const messageOne = document.querySelector('#message-1')
+const messageTwo = document.querySelector('#message-2')
+
+weatherForm.addEventListener('submit', event => {
+
+  event.preventDefault()
+  const location = search.value
+
+  messageOne.textContent = 'Loading...'
+  messageTwo.textContent = ''
+
+  fetch(`http://localhost:3000/weather?address=${location}`)
+    .then(response => {
+      response.json().then((data) => {
+        if (data.error) {
+          messageOne.textContent = data.error
+        } else {
+          messageOne.textContent = data.location
+          messageTwo.textContent = data.forecast
+        }
+      })
+    })
+})
+```
+
+```hbs
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Weather</title>
+    <link rel="icon" href="/img/weather.png">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <div class="main-content">
+        {{>header}}
+        <p>Use this site to get your weather!</p>
+
+        <form>
+            <input placeholder="Location">
+            <button>Search</button>
+        </form>
+
+        <p id="message-1"></p>
+        <p id="message-2"></p>
+    </div>
+    
+    {{>footer}}
+    <script src="/js/app.js"></script>
+</body>
+
+</html> 
 ```
 
 **[⬆ back to top](#table-of-contents)**
