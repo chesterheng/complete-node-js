@@ -40,7 +40,7 @@
     - [Serving up Static Assets](#serving-up-static-assets)
     - [Serving up CSS, JS, Images, and More](#serving-up-css-js-images-and-more)
     - [Dynamic Pages with Templating](#dynamic-pages-with-templating)
-    - [Dynamic Pages with Templating](#dynamic-pages-with-templating-1)
+    - [Customizing the Views Directory](#customizing-the-views-directory)
   - [**Section 8: Accessing API from Browser (Weather App)**](#section-8-accessing-api-from-browser-weather-app)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
@@ -1150,6 +1150,8 @@ web-server
 
 ### Dynamic Pages with Templating
 
+[hbs](https://github.com/pillarjs/hbs)
+
 web-server
 
 - public (exposed by the web server)
@@ -1218,9 +1220,60 @@ app.listen(3000, () => console.log('Server is up on port 3000.'))
 
 **[⬆ back to top](#table-of-contents)**
 
-### Dynamic Pages with Templating
+### Customizing the Views Directory
 
-[hbs](https://github.com/pillarjs/hbs)
+web-server
+
+- public (exposed by the web server)
+  - css
+  - img
+- src
+- templates (contains .hbs files)
+
+```javascript
+const express = require('express')
+const path = require('path')
+
+const app = express()
+
+// Define paths for Express config
+const publicDirectoryPath = path.join(__dirname, '../public')
+const viewsPath = path.join(__dirname, '../templates')
+
+// Setup handlebars engine and views location
+app.set('view engine', 'hbs')
+app.set('views', viewsPath)
+
+// Setup static directory to serve
+app.use(express.static(publicDirectoryPath))
+
+app.get('', (req, res) => {
+  res.render('index', {
+    title: 'Weather',
+    name: 'Andrew Mead'
+  })
+})
+
+app.get('/about', (req, res) => {
+  res.render('about', {
+    title: 'About Me',
+    name: 'Andrew Mead'
+  })
+})
+
+app.get('/help', (req, res) => {
+  res.render('help', {
+    helpText: 'This is some helpful text.'
+  })
+})
+
+app.get('/weather', (req, res) => res.send({
+  forecast: 'It is sunny',
+  location: 'Singapore'
+}))
+
+app.listen(3000, () => console.log('Server is up on port 3000.'))
+```
 
 **[⬆ back to top](#table-of-contents)**
 
