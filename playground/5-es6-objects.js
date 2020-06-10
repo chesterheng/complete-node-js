@@ -35,7 +35,7 @@ console.log(rating)
 
 const transaction = (type, {
     label,
-    stock
+    stock = 0
 }) => {
     console.log(type, label, stock)
 }

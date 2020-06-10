@@ -46,6 +46,7 @@
   - [**Section 8: Accessing API from Browser (Weather App)**](#section-8-accessing-api-from-browser-weather-app)
     - [The Query String](#the-query-string)
     - [Building a JSON HTTP Endpoint](#building-a-json-http-endpoint)
+    - [ES6 Aside: Default Function Parameters](#es6-aside-default-function-parameters)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
   - [**Section 11: REST APIs and Mongoose (Task App)**](#section-11-rest-apis-and-mongoose-task-app)
@@ -1492,6 +1493,18 @@ app.get('/weather', (req, res) => {
         address: req.query.address
       })
     })
+  })
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### ES6 Aside: Default Function Parameters
+
+```javascript
+// app.js
+geocode(req.query.address, (error, { latitude, longitude, location } = {}) => {
+    ...
   })
 })
 ```
