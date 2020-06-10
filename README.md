@@ -33,6 +33,7 @@
     - [The Callback Function](#the-callback-function)
     - [Callback Abstraction](#callback-abstraction)
     - [Callback Chaining](#callback-chaining)
+    - [HTTP Requests Without a Library](#http-requests-without-a-library)
   - [**Section 7: Web Servers (Weather App)**](#section-7-web-servers-weather-app)
   - [**Section 8: Accessing API from Browser (Weather App)**](#section-8-accessing-api-from-browser-weather-app)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
@@ -998,6 +999,39 @@ const transaction = (type, { label, stock }) => {
     console.log(type, label, stock)
 }
 transaction('order', product) 
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### HTTP Requests Without a Library
+
+[http.request](https://nodejs.org/api/http.html#http_http_request_url_options_callback)
+
+```javascript
+require('dotenv').config()
+const http = require('http')
+
+const accessKey = process.env.WEATHER_STACK_ACCESS_KEY
+const url = `http://api.weatherstack.com/current?access_key=${accessKey}&query=1.3,103.8`
+
+const request = http.request(url, response => {
+  let data = ''
+
+  response.on('data', chunk => {
+    data = data + chunk.toString()
+  })
+
+  response.on('end', () => {
+    const body = JSON.parse(data)
+    console.log(body)
+  })
+})
+
+request.on('error', (error) => {
+  console.log('An error', error)
+})
+
+request.end()
 ```
 
 **[⬆ back to top](#table-of-contents)**
