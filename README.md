@@ -37,6 +37,7 @@
   - [**Section 7: Web Servers (Weather App)**](#section-7-web-servers-weather-app)
     - [Hello Express](#hello-express)
     - [Serving up HTML and JSON](#serving-up-html-and-json)
+    - [Serving up Static Assets](#serving-up-static-assets)
   - [**Section 8: Accessing API from Browser (Weather App)**](#section-8-accessing-api-from-browser-weather-app)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
@@ -1064,6 +1065,7 @@ const express = require('express')
 
 const app = express()
 
+// route
 app.get('', (req, res) => res.send('<h1>Weather</h1>'))
 app.get('/help', (req, res) => res.send([
   { name: 'Andrew' }, { name: 'Sarah'}
@@ -1076,6 +1078,52 @@ app.get('/weather', (req, res) => res.send({
 
 app.listen(3000, () => console.log('Server is up on port 3000.'))
 ```
+
+Chrome Browser
+
+- http://localhost:3000
+- http://localhost:3000/help
+- http://localhost:3000/about
+- http://localhost:3000/weather
+
+**[⬆ back to top](#table-of-contents)**
+
+### Serving up Static Assets
+
+web-server
+
+- public
+- src
+
+```javascript
+const express = require('express')
+const path = require('path')
+
+const app = express()
+
+console.log(__dirname)
+console.log(__filename)
+const publicDirectoryPath = path.join(__dirname, '../public')
+
+// html static assets
+app.use(express.static(publicDirectoryPath))
+
+// route
+app.get('/weather', (req, res) => res.send({
+  forecast: 'It is sunny',
+  location: 'Singapore'
+}))
+
+app.listen(3000, () => console.log('Server is up on port 3000.'))
+```
+
+Chrome Browser
+
+- http://localhost:3000
+- http://localhost:3000/index.html
+- http://localhost:3000/help.html
+- http://localhost:3000/about.html
+- http://localhost:3000/weather
 
 **[⬆ back to top](#table-of-contents)**
 
