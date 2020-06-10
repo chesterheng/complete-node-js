@@ -48,6 +48,7 @@
     - [Building a JSON HTTP Endpoint](#building-a-json-http-endpoint)
     - [ES6 Aside: Default Function Parameters](#es6-aside-default-function-parameters)
     - [Browser HTTP Requests with Fetch](#browser-http-requests-with-fetch)
+    - [Creating a Search Form](#creating-a-search-form)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
   - [**Section 11: REST APIs and Mongoose (Task App)**](#section-11-rest-apis-and-mongoose-task-app)
@@ -1562,6 +1563,64 @@ fetch('http://localhost:3000/weather?address=!').then(response => {
       console.log(data.forecast)
     }
   })
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Creating a Search Form
+
+```hbs
+<!-- index.hbs -->
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Weather</title>
+    <link rel="icon" href="/img/weather.png">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <div class="main-content">
+        {{>header}}
+        <p>Use this site to get your weather!</p>
+
+        <form>
+            <input placeholder="Location">
+            <button>Search</button>
+        </form>
+    </div>
+    
+    {{>footer}}
+    <script src="/js/app.js"></script>
+</body>
+
+</html> 
+```
+
+```javascript
+// public/js/app.js
+console.log('Client side javascript file is loaded!')
+
+const weatherForm = document.querySelector('form')
+const search = document.querySelector('input')
+
+weatherForm.addEventListener('submit', event => {
+  event.preventDefault()
+  const location = search.value
+  fetch(`http://localhost:3000/weather?address=${location}`)
+    .then(response => {
+      response.json().then((data) => {
+        if (data.error) {
+          console.log(data.error)
+        } else {
+          console.log(data.location)
+          console.log(data.forecast)
+        }
+      })
+    })
 })
 ```
 
