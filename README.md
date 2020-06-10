@@ -42,6 +42,7 @@
     - [Dynamic Pages with Templating](#dynamic-pages-with-templating)
     - [Customizing the Views Directory](#customizing-the-views-directory)
     - [Advanced Templating](#advanced-templating)
+    - [404 Pages](#404-pages)
   - [**Section 8: Accessing API from Browser (Weather App)**](#section-8-accessing-api-from-browser-weather-app)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
@@ -1357,7 +1358,7 @@ app.listen(3000, () => console.log('Server is up on port 3000.'))
 ```
 
 ```hbs
-<!-- views/footer.hbs -->
+<!-- views/index.hbs -->
 <!DOCTYPE html>
 
 <html>
@@ -1368,6 +1369,50 @@ app.listen(3000, () => console.log('Server is up on port 3000.'))
 
 <body>
     {{>header}}
+    {{>footer}}
+</body>
+
+</html> 
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### 404 Pages
+
+```javascript
+...
+app.get('/help/*', (req, res) => {
+  res.render('404', {
+    title: '404',
+    name: 'Andrew Mead',
+    errorMessage: 'Help article not found.'
+  })
+})
+
+app.get('*', (req, res) => {
+  res.render('404', {
+    title: '404',
+    name: 'Andrew Mead',
+    errorMessage: 'Page not found.'
+  })
+})
+
+app.listen(3000, () => console.log('Server is up on port 3000.'))
+```
+
+```hbs
+<!-- views/404.hbs -->
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    {{>header}}
+    <p>{{errorMessage}}</p>
     {{>footer}}
 </body>
 
