@@ -10,8 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "hbs": "^4.1.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "postman-request": "^2.88.1-postman.23"
   }
 }
