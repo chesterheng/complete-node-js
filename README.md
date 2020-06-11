@@ -51,6 +51,7 @@
     - [Creating a Search Form](#creating-a-search-form)
     - [Wiring up the User Interface](#wiring-up-the-user-interface)
     - [Joining Heroku](#joining-heroku)
+    - [Exploring Git](#exploring-git)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
   - [**Section 11: REST APIs and Mongoose (Task App)**](#section-11-rest-apis-and-mongoose-task-app)
@@ -1703,6 +1704,55 @@ weatherForm.addEventListener('submit', event => {
 heroku -v
 heroku login
 ```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Exploring Git
+
+Version Control with Git
+
+| Untracked Files | Unstaged Changes | Staged Changes | Commits |
+| --------------- | ---------------- | -------------- | ------- |
+| src/app.js      |                  |                |         |
+| readme.md       |                  |                |         |
+
+add command
+
+| Untracked Files | Unstaged Changes | Staged Changes | Commits |
+| --------------- | ---------------- | -------------- | ------- |
+| readme.md       |                  | src/app.js     |         |
+
+commit
+
+| Untracked Files | Unstaged Changes | Staged Changes | Commits |
+| --------------- | ---------------- | -------------- | ------- |
+| readme.md       |                  |                |         |
+|                 |                  |                | 1ab49   |
+
+add new file geocode.js
+modify src/app.js
+
+| Untracked Files      | Unstaged Changes | Staged Changes | Commits |
+| -------------------- | ---------------- | -------------- | ------- |
+| readme.md            | src/app.js       |                |         |
+| src/utils/geocode.js |                  |                |         |
+|                      |                  |                | 1ab49   |
+
+add command
+
+| Untracked Files | Unstaged Changes | Staged Changes       | Commits |
+| --------------- | ---------------- | -------------------- | ------- |
+| readme.md       |                  | src/app.js           |         |
+|                 |                  | src/utils/geocode.js |         |
+|                 |                  |                      | 1ab49   |
+
+commit
+
+| Untracked Files | Unstaged Changes | Staged Changes | Commits |
+| --------------- | ---------------- | -------------- | ------- |
+| readme.md       |                  |                |         |
+|                 |                  |                | e9f21   |
+|                 |                  |                | 1ab49   |
 
 **[⬆ back to top](#table-of-contents)**
 
