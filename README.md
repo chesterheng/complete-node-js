@@ -66,6 +66,7 @@
     - [Querying Documents](#querying-documents)
     - [Promises](#promises)
     - [Updating Documents](#updating-documents)
+    - [Deleting Documents](#deleting-documents)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -2033,6 +2034,20 @@ doWorkPromise.then(result => {
 ```
 
 **[⬆ back to top](#table-of-contents)**
+
+### Deleting Documents
+
+```javascript
+db.collection('users')
+  .deleteMany({ age: 27 })
+  .then(result => console.log(result))
+  .catch(error => console.log(error))
+
+db.collection('tasks')
+  .deleteOne({ description: "Clean the house" })
+  .then(result => console.log(result))
+  .catch(error => console.log(error))
+```
 
 ## **Section 12: API Authentication and Security (Task App)**
 
