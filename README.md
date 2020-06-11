@@ -50,10 +50,11 @@
     - [Browser HTTP Requests with Fetch](#browser-http-requests-with-fetch)
     - [Creating a Search Form](#creating-a-search-form)
     - [Wiring up the User Interface](#wiring-up-the-user-interface)
+  - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
     - [Joining Heroku](#joining-heroku)
     - [Exploring Git](#exploring-git)
     - [Setting up SSH Keys](#setting-up-ssh-keys)
-  - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
+    - [Deploying Node.js to Heroku](#deploying-nodejs-to-heroku)
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
   - [**Section 11: REST APIs and Mongoose (Task App)**](#section-11-rest-apis-and-mongoose-task-app)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
@@ -1013,7 +1014,7 @@ const product = {
 const { label: productLabel, stock, rating = 5 } = product
 
 const transaction = (type, { label, stock }) => {
-    console.log(type, label, stock)
+  console.log(type, label, stock)
 }
 transaction('order', product) 
 ```
@@ -1218,12 +1219,12 @@ app.listen(3000, () => console.log('Server is up on port 3000.'))
 <html>
 
 <head>
-    <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
-    <h1>{{title}}</h1>
-    <p>Created by {{name}}</p>
+  <h1>{{title}}</h1>
+  <p>Created by {{name}}</p>
 </body>
 
 </html> 
@@ -1355,9 +1356,9 @@ app.listen(3000, () => console.log('Server is up on port 3000.'))
 <h1>{{title}}</h1>
 
 <div>
-    <a href="/">Weather</a>
-    <a href="/about">About</a>
-    <a href="/help">Help</a>
+  <a href="/">Weather</a>
+  <a href="/about">About</a>
+  <a href="/help">Help</a>
 </div>
 ```
 
@@ -1373,12 +1374,12 @@ app.listen(3000, () => console.log('Server is up on port 3000.'))
 <html>
 
 <head>
-    <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
-    {{>header}}
-    {{>footer}}
+  {{>header}}
+  {{>footer}}
 </body>
 
 </html> 
@@ -1416,13 +1417,13 @@ app.listen(3000, () => console.log('Server is up on port 3000.'))
 <html>
 
 <head>
-    <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
-    {{>header}}
-    <p>{{errorMessage}}</p>
-    {{>footer}}
+  {{>header}}
+  <p>{{errorMessage}}</p>
+  {{>footer}}
 </body>
 
 </html> 
@@ -1536,19 +1537,19 @@ web-server
 <html>
 
 <head>
-    <title>Weather</title>
-    <link rel="icon" href="/img/weather.png">
-    <link rel="stylesheet" href="/css/styles.css">
-    <script src="/js/app.js"></script>
+  <title>Weather</title>
+  <link rel="icon" href="/img/weather.png">
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="/js/app.js"></script>
 </head>
 
 <body>
-    <div class="main-content">
-        {{>header}}
-        <p>Use this site to get your weather!</p>
-    </div>
-    
-    {{>footer}}
+  <div class="main-content">
+    {{>header}}
+    <p>Use this site to get your weather!</p>
+  </div>
+  
+  {{>footer}}
 </body>
 
 </html> 
@@ -1581,24 +1582,24 @@ fetch('http://localhost:3000/weather?address=!').then(response => {
 <html>
 
 <head>
-    <title>Weather</title>
-    <link rel="icon" href="/img/weather.png">
-    <link rel="stylesheet" href="/css/styles.css">
+  <title>Weather</title>
+  <link rel="icon" href="/img/weather.png">
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
-    <div class="main-content">
-        {{>header}}
-        <p>Use this site to get your weather!</p>
+  <div class="main-content">
+    {{>header}}
+    <p>Use this site to get your weather!</p>
 
-        <form>
-            <input placeholder="Location">
-            <button>Search</button>
-        </form>
-    </div>
-    
-    {{>footer}}
-    <script src="/js/app.js"></script>
+    <form>
+      <input placeholder="Location">
+      <button>Search</button>
+    </form>
+  </div>
+  
+  {{>footer}}
+  <script src="/js/app.js"></script>
 </body>
 
 </html> 
@@ -1669,33 +1670,35 @@ weatherForm.addEventListener('submit', event => {
 <html>
 
 <head>
-    <title>Weather</title>
-    <link rel="icon" href="/img/weather.png">
-    <link rel="stylesheet" href="/css/styles.css">
+  <title>Weather</title>
+  <link rel="icon" href="/img/weather.png">
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
-    <div class="main-content">
-        {{>header}}
-        <p>Use this site to get your weather!</p>
+  <div class="main-content">
+    {{>header}}
+    <p>Use this site to get your weather!</p>
 
-        <form>
-            <input placeholder="Location">
-            <button>Search</button>
-        </form>
+    <form>
+      <input placeholder="Location">
+      <button>Search</button>
+    </form>
 
-        <p id="message-1"></p>
-        <p id="message-2"></p>
-    </div>
-    
-    {{>footer}}
-    <script src="/js/app.js"></script>
+    <p id="message-1"></p>
+    <p id="message-2"></p>
+  </div>
+  
+  {{>footer}}
+  <script src="/js/app.js"></script>
 </body>
 
 </html> 
 ```
 
 **[⬆ back to top](#table-of-contents)**
+
+## **Section 9: Application Deployment (Weather App)**
 
 ### Joining Heroku
 
@@ -1781,7 +1784,58 @@ ssh-add -K ~/.ssh/id_rsa
 
 **[⬆ back to top](#table-of-contents)**
 
-## **Section 9: Application Deployment (Weather App)**
+### Deploying Node.js to Heroku
+
+```console
+<!-- add id_rsa keys to heroku -->
+heroku keys:add
+
+<!-- create new heroku app from web-server directory -->
+heroku create chester-weather-app
+```
+
+https://chester-weather-app.herokuapp.com/
+https://git.heroku.com/chester-weather-app.git
+
+```json
+// package.json
+{
+  "name": "web-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  ...
+  }
+}
+```
+
+```javascript
+// src/app.js
+...
+const port = process.env.PORT || 3000
+...
+app.listen(port, () => console.log(`Server is up on port ${port}.`))
+```
+
+```javascript
+// public/js/app.js
+  fetch(`/weather?address=${location}`)
+    ...
+})
+```
+
+```console
+git init
+heroku git:remote -a chester-weather-app
+git add .
+git commit -m "weather-app"
+git push heroku master
+```
+
+[Configuration and Config Vars](https://devcenter.heroku.com/articles/config-vars)
 
 **[⬆ back to top](#table-of-contents)**
 
