@@ -64,6 +64,7 @@
     - [Inserting Documents](#inserting-documents)
     - [The ObjectID](#the-objectid)
     - [Querying Documents](#querying-documents)
+    - [Promises](#promises)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -1988,6 +1989,33 @@ console.log(id.toHexString().length)
       console.log(user)
     })
 ```
+
+### Promises
+
+```javascript
+const doWorkPromise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve([7, 4, 1])
+    // reject('Things went wrong!')
+  }, 2000)
+})
+
+doWorkPromise.then(result => {
+  console.log('Success!', result)
+}).catch((error) => {
+  console.log('Error!', error)
+})
+
+//
+//                               fulfilled
+//                              /
+// Promise      -- pending --> 
+//                              \
+//                               rejected
+//
+```
+
+**[⬆ back to top](#table-of-contents)**
 
 ## **Section 12: API Authentication and Security (Task App)**
 
