@@ -59,6 +59,7 @@
     - [MongoDB and NoSQL Databases](#mongodb-and-nosql-databases)
   - [**Section 11: REST APIs and Mongoose (Task App)**](#section-11-rest-apis-and-mongoose-task-app)
     - [Installing MongoDB on macOS and Linux](#installing-mongodb-on-macos-and-linux)
+    - [Installing Database GUI Viewer](#installing-database-gui-viewer)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -1870,6 +1871,18 @@ user directory
 cd ~
 pwd
 /Users/chesterheng/mongod --dbpath=/Users/chesterheng/mongodb-data
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Installing Database GUI Viewer
+
+[Download Robo 3T](https://robomongo.org/download)
+
+Right click connection > Open Shell
+
+```console
+db.version()
 ```
 
 **[⬆ back to top](#table-of-contents)**
