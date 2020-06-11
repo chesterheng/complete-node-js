@@ -52,6 +52,7 @@
     - [Wiring up the User Interface](#wiring-up-the-user-interface)
     - [Joining Heroku](#joining-heroku)
     - [Exploring Git](#exploring-git)
+    - [Setting up SSH Keys](#setting-up-ssh-keys)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
   - [**Section 11: REST APIs and Mongoose (Task App)**](#section-11-rest-apis-and-mongoose-task-app)
@@ -1753,6 +1754,30 @@ commit
 | readme.md       |                  |                |         |
 |                 |                  |                | e9f21   |
 |                 |                  |                | 1ab49   |
+
+**[⬆ back to top](#table-of-contents)**
+
+### Setting up SSH Keys
+
+```console
+<!-- check for rsa key pairs -->
+ls -a -l ~/.ssh
+
+<!-- create new rsa key pairs with comment -->
+ssh-keygen -t rsa -b 4096 -C "xxx@gmail.com"
+
+<!-- list newly created rsa key pairs  -->
+ls -a -l ~/.ssh
+-rw-------    1 xxx  staff  3389 Jun 11 18:21 id_rsa
+-rw-r--r--    1 xxx  staff   748 Jun 11 18:21 id_rsa.pub
+
+<!-- check SSH authentication agent id -->
+<!-- make sure ssh is running   -->
+eval "$(ssh-agent -s)"
+
+<!-- adding SSH private keys into the SSH authentication agent -->
+ssh-add -K ~/.ssh/id_rsa
+```
 
 **[⬆ back to top](#table-of-contents)**
 
