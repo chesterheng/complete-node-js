@@ -58,6 +58,7 @@
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
     - [MongoDB and NoSQL Databases](#mongodb-and-nosql-databases)
   - [**Section 11: REST APIs and Mongoose (Task App)**](#section-11-rest-apis-and-mongoose-task-app)
+    - [Installing MongoDB on macOS and Linux](#installing-mongodb-on-macos-and-linux)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -1854,6 +1855,22 @@ git push heroku master
 **[⬆ back to top](#table-of-contents)**
 
 ## **Section 11: REST APIs and Mongoose (Task App)**
+
+### Installing MongoDB on macOS and Linux
+
+[mongodb](https://www.mongodb.com/try/download/community)
+
+user directory
+
+- mongodb (app)
+- mongodb-data
+
+```console
+<!-- run mondodb -->
+cd ~
+pwd
+/Users/chesterheng/mongod --dbpath=/Users/chesterheng/mongodb-data
+```
 
 **[⬆ back to top](#table-of-contents)**
 
