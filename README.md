@@ -68,6 +68,7 @@
     - [Deleting Documents](#deleting-documents)
   - [**Section 11: REST APIs and Mongoose (Task App)**](#section-11-rest-apis-and-mongoose-task-app)
     - [Setting up Mongoose](#setting-up-mongoose)
+    - [Creating a Mongoose Model](#creating-a-mongoose-model)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -2081,6 +2082,27 @@ me.save().then(() => {
 }).catch((error) => {
   console.log('Error!', error)
 }) 
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Creating a Mongoose Model
+
+```javascript
+const Task = mongoose.model('Task', {
+  description: { type: String },
+  completed: { type: Boolean }
+})
+
+const task = new Task({
+  description: 'Learn the Mongoose library',
+  completed: false
+})
+
+task
+  .save()
+  .then(() => console.log(task))
+  .catch((error) => console.log('Error!', error)) 
 ```
 
 **[⬆ back to top](#table-of-contents)**
