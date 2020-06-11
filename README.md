@@ -60,6 +60,7 @@
   - [**Section 11: REST APIs and Mongoose (Task App)**](#section-11-rest-apis-and-mongoose-task-app)
     - [Installing MongoDB on macOS and Linux](#installing-mongodb-on-macos-and-linux)
     - [Installing Database GUI Viewer](#installing-database-gui-viewer)
+    - [Connecting and Inserting Documents](#connecting-and-inserting-documents)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -1883,6 +1884,36 @@ Right click connection > Open Shell
 
 ```console
 db.version()
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Connecting and Inserting Documents
+
+- [MongoDB Node.JS Driver](https://mongodb.github.io/node-mongodb-native/)
+- [MongoDB Node.JS Driver Github](https://github.com/mongodb/node-mongodb-native)
+
+```javascript
+// CRUD create read update delete
+
+const mongodb = require('mongodb')
+const MongoClient = mongodb.MongoClient
+
+const connectionURL = 'mongodb://127.0.0.1:27017'
+const databaseName = 'task-manager'
+
+MongoClient.connect(connectionURL, { useNewUrlParser: true }, 
+  (error, client) => {
+    if (error) {
+      return console.log('Unable to connect to database!')
+    }
+
+    const db = client.db(databaseName)
+    db.collection('users').insertOne({
+      name: 'Andrew',
+      age: 27
+    })
+  })
 ```
 
 **[⬆ back to top](#table-of-contents)**
