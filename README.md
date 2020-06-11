@@ -63,6 +63,7 @@
     - [Connecting and Inserting Documents](#connecting-and-inserting-documents)
     - [Inserting Documents](#inserting-documents)
     - [The ObjectID](#the-objectid)
+    - [Querying Documents](#querying-documents)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -1965,6 +1966,28 @@ console.log(id.toHexString().length)
 ```
 
 **[⬆ back to top](#table-of-contents)**
+
+### Querying Documents
+
+```javascript
+  db.collection('users')
+    .findOne({ _id: new ObjectID("5ee24aeb128f4d0ade868959") }
+    , (error, user) => {
+      if (error) {
+        return console.log('Unable to fetch')
+      }
+      console.log(user)
+    })
+
+  db.collection('users')
+    .find({ age: 27 })
+    .toArray((error, user) => {
+      if (error) {
+        return console.log('Unable to fetch')
+      }
+      console.log(user)
+    })
+```
 
 ## **Section 12: API Authentication and Security (Task App)**
 
