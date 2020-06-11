@@ -69,6 +69,7 @@
   - [**Section 11: REST APIs and Mongoose (Task App)**](#section-11-rest-apis-and-mongoose-task-app)
     - [Setting up Mongoose](#setting-up-mongoose)
     - [Creating a Mongoose Model](#creating-a-mongoose-model)
+    - [Data Validation and Sanitization](#data-validation-and-sanitization)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -2106,6 +2107,99 @@ task
 ```
 
 **[⬆ back to top](#table-of-contents)**
+
+### Data Validation and Sanitization
+
+[validator.js](https://github.com/validatorjs/validator.js)
+
+```javascript
+// src/models/user
+const mongoose = require('mongoose')
+const validator = require('validator')
+
+const User = mongoose.model('User', {
+  name: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  email: {
+    type: String,
+    required: true,
+    trim: true,
+    lowercase: true,
+    validate(value) {
+      if (!validator.isEmail(value)) {
+          throw new Error('Email is invalid')
+      }
+    }
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 7,
+    trim: true,
+    validate(value) {
+      if (value.toLowerCase().includes('password')) {
+          throw new Error('Password cannot contain "password"')
+      }
+    }
+  },
+  age: {
+    type: Number,
+    default: 0,
+    validate(value) {
+      if (value < 0) {
+          throw new Error('Age must be a postive number')
+      }
+    }
+  }
+})
+
+module.exports = User
+```
+
+```javascript
+// src/index.js
+const express = require('express')
+require('./db/mongoose')
+const User = require('./models/user')
+const Task = require('./models/task')
+
+const app = express()
+const port = process.env.PORT || 3000
+
+app.use(express.json())
+
+app.post('/users', (req, res) => {
+  const user = new User(req.body)
+  user
+    .save()
+    .then(() => res.status(201).send(user))
+    .catch(error => res.status(400).send(error))
+})
+
+app.get('/users', (req, res) => {
+  User
+    .find({})
+    .then(users => res.send(users))
+    .catch(error => res.status(500).send())
+})
+
+app.get('/users/:id', (req, res) => {
+  const _id = req.params.id
+  User
+    .findById(_id)
+    .then(user => {
+      if (!user) {
+        return res.status(404).send()
+      }
+      res.send(user)
+    }).catch(error => res.status(500).send())
+})
+
+app.listen(port, () => console.log(`Server is up on port ${port}`))
+```
 
 ## **Section 12: API Authentication and Security (Task App)**
 
