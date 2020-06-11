@@ -62,6 +62,7 @@
     - [Installing Database GUI Viewer](#installing-database-gui-viewer)
     - [Connecting and Inserting Documents](#connecting-and-inserting-documents)
     - [Inserting Documents](#inserting-documents)
+    - [The ObjectID](#the-objectid)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -1946,6 +1947,21 @@ MongoClient.connect(connectionURL, {
     }
     console.log(result.ops)
   })
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### The ObjectID
+
+```javascript
+const id = new ObjectID()
+// <Buffer 5e e2 a3 3f be d3 08 11 82 e8 22 7d>
+console.log(id.id)
+console.log(id.id.length)
+
+// 5ee2a33fbed3081182e8227d
+console.log(id.toHexString())
+console.log(id.toHexString().length)
 ```
 
 **[⬆ back to top](#table-of-contents)**
