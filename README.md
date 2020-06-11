@@ -56,6 +56,7 @@
     - [Setting up SSH Keys](#setting-up-ssh-keys)
     - [Deploying Node.js to Heroku](#deploying-nodejs-to-heroku)
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
+    - [MongoDB and NoSQL Databases](#mongodb-and-nosql-databases)
   - [**Section 11: REST APIs and Mongoose (Task App)**](#section-11-rest-apis-and-mongoose-task-app)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
@@ -1840,6 +1841,15 @@ git push heroku master
 **[⬆ back to top](#table-of-contents)**
 
 ## **Section 10: MongoDB and Promises (Task App)**
+
+### MongoDB and NoSQL Databases
+
+| SQL(Structure Query Language) | NoSQL (Not Only SQL) |
+| ----------------------------- | -------------------- |
+| Database                      | Database             |
+| Table                         | Collection           |
+| Row / Record                  | Document             |
+| Column                        | Field                |
 
 **[⬆ back to top](#table-of-contents)**
 
