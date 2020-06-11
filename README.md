@@ -70,6 +70,7 @@
     - [Setting up Mongoose](#setting-up-mongoose)
     - [Creating a Mongoose Model](#creating-a-mongoose-model)
     - [Data Validation and Sanitization](#data-validation-and-sanitization)
+    - [Structuring a REST API](#structuring-a-rest-api)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -2200,6 +2201,48 @@ app.get('/users/:id', (req, res) => {
 
 app.listen(port, () => console.log(`Server is up on port ${port}`))
 ```
+
+### Structuring a REST API
+
+REST API or RESTful API
+
+- REST API: allows clients to access and manipulate resources using a set of predefined operations
+  - resource: a user or a task
+  - predefined operation
+    - create a new task
+    - mark a task as complete
+- REST: Representational State Transfer
+  - Representational of resource
+  - State Transfer: stateless 
+    - transfer from server to the client)
+- API: Application Programming Interface
+  - a set of tools to build application
+
+Task Resource
+
+- Create: POST /tasks
+- Read: GET /tasks
+- Read: GET /tasks/:id
+- Update: PATCH /tasks/:id
+- Delete: DELETE /tasks/:id
+
+Request
+
+- POST /tasks HTTP/1.1
+- Accept: application/json
+- Connection: Keep-Alive
+- Authorization: Bearer ey...
+- { "descroption": "Learn Node JS" }
+
+Response
+
+- HTTP/1.1 201 Created
+- Date: Sun, 28 Jul 2020 15:37:37 GMT
+- Server: Express
+- Content-Type: application/json
+- { "_id": "...", "descroption": "Learn Node JS" }
+
+**[⬆ back to top](#table-of-contents)**
 
 ## **Section 12: API Authentication and Security (Task App)**
 
