@@ -50,6 +50,7 @@
     - [Browser HTTP Requests with Fetch](#browser-http-requests-with-fetch)
     - [Creating a Search Form](#creating-a-search-form)
     - [Wiring up the User Interface](#wiring-up-the-user-interface)
+    - [Joining Heroku](#joining-heroku)
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
   - [**Section 11: REST APIs and Mongoose (Task App)**](#section-11-rest-apis-and-mongoose-task-app)
@@ -1690,6 +1691,17 @@ weatherForm.addEventListener('submit', event => {
 </body>
 
 </html> 
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Joining Heroku
+
+[Heroku: Cloud Application Platform](https://www.heroku.com/)
+
+```console
+heroku -v
+heroku login
 ```
 
 **[⬆ back to top](#table-of-contents)**
