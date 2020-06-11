@@ -61,6 +61,7 @@
     - [Installing MongoDB on macOS and Linux](#installing-mongodb-on-macos-and-linux)
     - [Installing Database GUI Viewer](#installing-database-gui-viewer)
     - [Connecting and Inserting Documents](#connecting-and-inserting-documents)
+    - [Inserting Documents](#inserting-documents)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -1915,6 +1916,36 @@ MongoClient.connect(connectionURL, {
     age: 27
   })
 })
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Inserting Documents
+
+```javascript
+  db.collection('users').insertOne({
+    name: 'Andrew',
+    age: 27
+  }, (error, result) => {
+    if (error) {
+      return console.log('Unable to insert user')
+    }
+    console.log(result.ops)
+  })
+
+  db.collection('users').insertMany([
+    {
+      name: 'Jen',
+      age: 28
+    }, {
+      name: 'Gunther',
+      age: 27
+  }], (error, result) => {
+    if (error) {
+      return console.log('Unable to insert documents!')
+    }
+    console.log(result.ops)
+  })
 ```
 
 **[⬆ back to top](#table-of-contents)**
