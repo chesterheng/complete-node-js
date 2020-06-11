@@ -57,7 +57,6 @@
     - [Deploying Node.js to Heroku](#deploying-nodejs-to-heroku)
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
     - [MongoDB and NoSQL Databases](#mongodb-and-nosql-databases)
-  - [**Section 11: REST APIs and Mongoose (Task App)**](#section-11-rest-apis-and-mongoose-task-app)
     - [Installing MongoDB on macOS and Linux](#installing-mongodb-on-macos-and-linux)
     - [Installing Database GUI Viewer](#installing-database-gui-viewer)
     - [Connecting and Inserting Documents](#connecting-and-inserting-documents)
@@ -67,6 +66,8 @@
     - [Promises](#promises)
     - [Updating Documents](#updating-documents)
     - [Deleting Documents](#deleting-documents)
+  - [**Section 11: REST APIs and Mongoose (Task App)**](#section-11-rest-apis-and-mongoose-task-app)
+    - [Setting up Mongoose](#setting-up-mongoose)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -1862,8 +1863,6 @@ git push heroku master
 
 **[⬆ back to top](#table-of-contents)**
 
-## **Section 11: REST APIs and Mongoose (Task App)**
-
 ### Installing MongoDB on macOS and Linux
 
 [mongodb](https://www.mongodb.com/try/download/community)
@@ -2048,6 +2047,43 @@ db.collection('tasks')
   .then(result => console.log(result))
   .catch(error => console.log(error))
 ```
+
+
+## **Section 11: REST APIs and Mongoose (Task App)**
+
+### Setting up Mongoose
+
+```javascript
+const mongoose = require('mongoose')
+
+mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true
+})
+
+const User = mongoose.model('User', {
+  name: {
+    type: String
+  },
+  age: {
+    type: Number
+  }
+})
+
+const me = new User({
+  name: 'Andrew',
+  age: 27
+})
+
+me.save().then(() => {
+  console.log(me)
+}).catch((error) => {
+  console.log('Error!', error)
+}) 
+```
+
+**[⬆ back to top](#table-of-contents)**
 
 ## **Section 12: API Authentication and Security (Task App)**
 
