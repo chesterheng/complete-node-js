@@ -65,6 +65,7 @@
     - [The ObjectID](#the-objectid)
     - [Querying Documents](#querying-documents)
     - [Promises](#promises)
+    - [Updating Documents](#updating-documents)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -2013,6 +2014,22 @@ doWorkPromise.then(result => {
 //                              \
 //                               rejected
 //
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Updating Documents
+
+```javascript
+  db.collection('users')
+    .updateOne({ _id: new ObjectID("5ee24aeb128f4d0ade868959") }, { $inc: { age: 1 } })
+    .then(result => console.log(result.modifiedCount))
+    .catch(error => console.log(error))
+
+  db.collection('tasks')
+    .updateMany({ completed: false }, { $set: { completed: true } })
+    .then(result => console.log(result.modifiedCount))
+    .catch(error => console.log(error))
 ```
 
 **[⬆ back to top](#table-of-contents)**
