@@ -81,7 +81,7 @@
     - [Separate Route Files](#separate-route-files)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
     - [Securely Storing Passwords](#securely-storing-passwords)
-    - [Securely Storing Passwords](#securely-storing-passwords-1)
+    - [Logging in Users](#logging-in-users)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
@@ -2593,10 +2593,6 @@ const myFunction = async () => {
 myFunction()
 ```
 
-**[⬆ back to top](#table-of-contents)**
-
-### Securely Storing Passwords
-
 ```javascript
 // src/models/user.js
 const mongoose = require('mongoose')
@@ -2642,6 +2638,7 @@ const userSchema = new mongoose.Schema({
   }
 })
 
+// Hash the plain text password before saving
 userSchema.pre('save', async function (next) {
   const user = this
 
@@ -2679,6 +2676,41 @@ router.patch('/users/:id', async (req, res) => {
     res.send(user)
   } catch (e) {
     res.status(400).send(e)
+  }
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Logging in Users
+
+```javascript
+// src/models/user.js
+userSchema.statics.findByCredentials = async (email, password) => {
+  const user = await User.findOne({ email })
+
+  if (!user) {
+    throw new Error('Unable to login')
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password)
+
+  if (!isMatch) {
+    throw new Error('Unable to login')
+  }
+
+  return user
+}
+```
+
+```javascript
+// src/routers/user.js
+router.post('/users/login', async (req, res) => {
+  try {
+    const user = await User.findByCredentials(req.body.email, req.body.password)
+    res.send(user)
+  } catch (e) {
+    res.status(400).send()
   }
 })
 ```
