@@ -73,6 +73,7 @@
     - [Structuring a REST API](#structuring-a-rest-api)
     - [Resource Creation Endpoints](#resource-creation-endpoints)
     - [Resource Reading Endpoints](#resource-reading-endpoints)
+    - [Promise Chaining](#promise-chaining)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -2305,6 +2306,21 @@ app.get('/tasks/:id', (req, res) => {
 ```
 
 **[⬆ back to top](#table-of-contents)**
+
+### Promise Chaining
+
+```javascript
+const add = (a, b) => {
+  new Promise((resolve, reject) => {
+    setTimeout(() => resolve(a + b), 2000)
+  })
+}
+
+add(1, 1)
+  .then(sum => add(sum, 4))
+  .then((sum2) => console.log(sum2))
+  .catch(error => console.log(error))
+```
 
 ## **Section 12: API Authentication and Security (Task App)**
 
