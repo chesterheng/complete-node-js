@@ -74,6 +74,7 @@
     - [Resource Creation Endpoints](#resource-creation-endpoints)
     - [Resource Reading Endpoints](#resource-reading-endpoints)
     - [Promise Chaining](#promise-chaining)
+    - [Async/Await](#asyncawait)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -2320,6 +2321,32 @@ add(1, 1)
   .then(sum => add(sum, 4))
   .then((sum2) => console.log(sum2))
   .catch(error => console.log(error))
+```
+
+### Async/Await
+
+```javascript
+const add = (a, b) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (a < 0 || b < 0) {
+        return reject('Numbers must be non-negative')
+      }
+      resolve(a + b)
+    }, 2000)
+  })
+}
+
+const doWork = async () => {
+  const sum = await add(1, -99)
+  const sum2 = await add(sum, 50)
+  const sum3 = await add(sum2, -3)
+  return sum3
+}
+
+doWork()
+  .then(result => console.log('result', result))
+  .catch(error => console.log('error', error))
 ```
 
 ## **Section 12: API Authentication and Security (Task App)**
