@@ -71,6 +71,7 @@
     - [Creating a Mongoose Model](#creating-a-mongoose-model)
     - [Data Validation and Sanitization](#data-validation-and-sanitization)
     - [Structuring a REST API](#structuring-a-rest-api)
+    - [Resource Creation Endpoints](#resource-creation-endpoints)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -1879,7 +1880,7 @@ user directory
 <!-- run mondodb -->
 cd ~
 pwd
-/Users/chesterheng/mongod --dbpath=/Users/chesterheng/mongodb-data
+/Users/chesterheng/mongodb/bin/mongod --dbpath=/Users/chesterheng/mongodb-data
 ```
 
 **[⬆ back to top](#table-of-contents)**
@@ -2114,7 +2115,7 @@ task
 [validator.js](https://github.com/validatorjs/validator.js)
 
 ```javascript
-// src/models/user
+// src/models/user.js
 const mongoose = require('mongoose')
 const validator = require('validator')
 
@@ -2161,45 +2162,22 @@ module.exports = User
 ```
 
 ```javascript
-// src/index.js
-const express = require('express')
-require('./db/mongoose')
-const User = require('./models/user')
-const Task = require('./models/task')
+// src/models/task.js
+const mongoose = require('mongoose')
 
-const app = express()
-const port = process.env.PORT || 3000
-
-app.use(express.json())
-
-app.post('/users', (req, res) => {
-  const user = new User(req.body)
-  user
-    .save()
-    .then(() => res.status(201).send(user))
-    .catch(error => res.status(400).send(error))
+const Task = mongoose.model('Task', {
+    description: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    completed: {
+        type: Boolean,
+        default: false
+    }
 })
 
-app.get('/users', (req, res) => {
-  User
-    .find({})
-    .then(users => res.send(users))
-    .catch(error => res.status(500).send())
-})
-
-app.get('/users/:id', (req, res) => {
-  const _id = req.params.id
-  User
-    .findById(_id)
-    .then(user => {
-      if (!user) {
-        return res.status(404).send()
-      }
-      res.send(user)
-    }).catch(error => res.status(500).send())
-})
-
-app.listen(port, () => console.log(`Server is up on port ${port}`))
+module.exports = Task
 ```
 
 ### Structuring a REST API
@@ -2241,6 +2219,78 @@ Response
 - Server: Express
 - Content-Type: application/json
 - { "_id": "...", "descroption": "Learn Node JS" }
+
+**[⬆ back to top](#table-of-contents)**
+
+### Resource Creation Endpoints
+
+```javascript
+// src/index.js
+const express = require('express')
+require('./db/mongoose')
+const User = require('./models/user')
+const Task = require('./models/task')
+
+const app = express()
+const port = process.env.PORT || 3000
+
+app.use(express.json())
+
+app.post('/users', (req, res) => {
+    const user = new User(req.body)
+
+    user.save()
+        .then(() => res.status(201).send(user))
+        .catch(error => res.status(400).send(error))
+})
+
+app.get('/users', (req, res) => {
+    User.find({})
+        .then(users => res.send(users))
+        .catch(error => res.status(500).send())
+})
+
+app.get('/users/:id', (req, res) => {
+    const _id = req.params.id
+    User.findById(_id).then((user) => {
+        if (!user) {
+            return res.status(404).send()
+        }
+        res.send(user)
+    }).catch(error => res.status(500).send())
+})
+
+app.post('/tasks', (req, res) => {
+    const task = new Task(req.body)
+    task.save()
+        .then(() => res.status(201).send(task))
+        .catch(error => res.status(400).send(error))
+})
+
+app.get('/tasks', (req, res) => {
+    Task.find({}).then((tasks) => {
+        res.send(tasks)
+    }).catch((e) => {
+        res.status(500).send()
+    })
+})
+
+app.get('/tasks/:id', (req, res) => {
+    const _id = req.params.id
+
+    Task.findById(_id).then((task) => {
+        if (!task) {
+            return res.status(404).send()
+        }
+
+        res.send(task)
+    }).catch((e) => {
+        res.status(500).send()
+    })
+})
+
+app.listen(port, () => console.log(`Server is up on port ${port}`))
+```
 
 **[⬆ back to top](#table-of-contents)**
 
