@@ -76,6 +76,7 @@
     - [Promise Chaining](#promise-chaining)
     - [Async/Await](#asyncawait)
     - [Integrating Async/Await](#integrating-asyncawait)
+    - [Resource Updating Endpoints](#resource-updating-endpoints)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -2418,6 +2419,57 @@ app.get('/tasks/:id', (req, res) => {
     res.send(task)
   } catch (error) {
     res.status(500).send()
+  }
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Resource Updating Endpoints
+
+```javascript
+
+app.patch('/users/:id', async (req, res) => {
+  const updates = Object.keys(req.body)
+  const allowedUpdates = ['name', 'email', 'password', 'age']
+  const isValidOperation = updates.every(update => allowedUpdates.includes(update))
+
+  if (!isValidOperation) {
+    return res.status(400).send({ error: 'Invalid updates!' })
+  }
+
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+
+    if (!user) {
+      return res.status(404).send()
+    }
+
+    res.send(user)
+  } catch (error) {
+    res.status(400).send(error)
+  }
+})
+
+app.patch('/tasks/:id', async (req, res) => {
+  const updates = Object.keys(req.body)
+  const allowedUpdates = ['description', 'completed']
+  const isValidOperation = updates.every(update => allowedUpdates.includes(update))
+
+  if (!isValidOperation) {
+    return res.status(400).send({ error: 'Invalid updates!' })
+  }
+
+  try {
+    const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true})
+
+    if (!task) {
+      return res.status(404).send()
+    }
+
+    res.send(task)
+  } catch (error) {
+    res.status(400).send(error)
   }
 })
 ```
