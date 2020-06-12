@@ -77,6 +77,7 @@
     - [Async/Await](#asyncawait)
     - [Integrating Async/Await](#integrating-asyncawait)
     - [Resource Updating Endpoints](#resource-updating-endpoints)
+    - [Resource Deleting Endpoints](#resource-deleting-endpoints)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -2470,6 +2471,40 @@ app.patch('/tasks/:id', async (req, res) => {
     res.send(task)
   } catch (error) {
     res.status(400).send(error)
+  }
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Resource Deleting Endpoints
+
+```javascript
+app.delete('/users/:id', async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id)
+
+    if (!user) {
+      return res.status(404).send()
+    }
+
+    res.send(user)
+  } catch (error) {
+    res.status(500).send()
+  }
+})
+
+app.delete('/tasks/:id', async (req, res) => {
+  try {
+    const task = await Task.findByIdAndDelete(req.params.id)
+
+    if (!task) {
+      res.status(404).send()
+    }
+
+    res.send(task)
+  } catch (error) {
+    res.status(500).send()
   }
 })
 ```
