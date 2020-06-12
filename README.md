@@ -72,6 +72,7 @@
     - [Data Validation and Sanitization](#data-validation-and-sanitization)
     - [Structuring a REST API](#structuring-a-rest-api)
     - [Resource Creation Endpoints](#resource-creation-endpoints)
+    - [Resource Reading Endpoints](#resource-reading-endpoints)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -2237,59 +2238,70 @@ const port = process.env.PORT || 3000
 app.use(express.json())
 
 app.post('/users', (req, res) => {
-    const user = new User(req.body)
+  const user = new User(req.body)
 
-    user.save()
-        .then(() => res.status(201).send(user))
-        .catch(error => res.status(400).send(error))
-})
-
-app.get('/users', (req, res) => {
-    User.find({})
-        .then(users => res.send(users))
-        .catch(error => res.status(500).send())
-})
-
-app.get('/users/:id', (req, res) => {
-    const _id = req.params.id
-    User.findById(_id).then((user) => {
-        if (!user) {
-            return res.status(404).send()
-        }
-        res.send(user)
-    }).catch(error => res.status(500).send())
+  user
+    .save()
+    .then(() => res.status(201).send(user))
+    .catch(error => res.status(400).send(error))
 })
 
 app.post('/tasks', (req, res) => {
-    const task = new Task(req.body)
-    task.save()
-        .then(() => res.status(201).send(task))
-        .catch(error => res.status(400).send(error))
-})
-
-app.get('/tasks', (req, res) => {
-    Task.find({}).then((tasks) => {
-        res.send(tasks)
-    }).catch((e) => {
-        res.status(500).send()
-    })
-})
-
-app.get('/tasks/:id', (req, res) => {
-    const _id = req.params.id
-
-    Task.findById(_id).then((task) => {
-        if (!task) {
-            return res.status(404).send()
-        }
-
-        res.send(task)
-    }).catch((e) => {
-        res.status(500).send()
-    })
+  const task = new Task(req.body)
+  task
+    .save()
+    .then(() => res.status(201).send(task))
+    .catch(error => res.status(400).send(error))
 })
 
 app.listen(port, () => console.log(`Server is up on port ${port}`))
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Resource Reading Endpoints
+
+```javascript
+app.get('/users', (req, res) => {
+  User
+    .find({})
+    .then(users => res.send(users))
+    .catch(error => res.status(500).send())
+})
+
+app.get('/users/:id', (req, res) => {
+  const _id = req.params.id
+  User
+    .findById(_id)
+    .then(user => {
+      if (!user) {
+        return res.status(404).send()
+      }
+      res.send(user)
+    })
+    .catch(error => res.status(500).send())
+})
+
+app.get('/tasks', (req, res) => {
+  Task
+    .find({})
+    .then(tasks => res.send(tasks))
+    .catch(error => res.status(500).send())
+})
+
+app.get('/tasks/:id', (req, res) => {
+  const _id = req.params.id
+
+  Task
+    .findById(_id)
+    .then(task => {
+      if (!task) {
+        return res.status(404).send()
+      }
+      res.send(task)
+    })
+    .catch(error => res.status(500).send())
+})
 ```
 
 **[⬆ back to top](#table-of-contents)**
