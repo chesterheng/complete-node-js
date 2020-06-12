@@ -78,6 +78,7 @@
     - [Integrating Async/Await](#integrating-asyncawait)
     - [Resource Updating Endpoints](#resource-updating-endpoints)
     - [Resource Deleting Endpoints](#resource-deleting-endpoints)
+    - [Separate Route Files](#separate-route-files)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -2507,6 +2508,64 @@ app.delete('/tasks/:id', async (req, res) => {
     res.status(500).send()
   }
 })
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Separate Route Files
+
+task-manager
+
+- src
+  - db
+  - models
+  - routers
+
+```javascript
+// src/index.js
+const express = require('express')
+require('./db/mongoose')
+const userRouter = require('./routers/user')
+const taskRouter = require('./routers/task')
+
+const app = express()
+const port = process.env.PORT || 3000
+
+app.use(express.json())
+app.use(userRouter)
+app.use(taskRouter)
+
+app.listen(port, () => console.log(`Server is up on port ${port}`))
+```
+
+```javascript
+// src/routers/task.js
+const express = require('express')
+const Task = require('../models/task')
+const router = new express.Router()
+
+router.post('/tasks', async (req, res) => { ... })
+router.get('/tasks', async (req, res) => { ... })
+router.get('/tasks/:id', async (req, res) => { ... })
+router.patch('/tasks/:id', async (req, res) => { ... })
+router.delete('/tasks/:id', async (req, res) => { ... })
+
+module.exports = router
+```
+
+```javascript
+// src/routers/user.js
+const express = require('express')
+const User = require('../models/user')
+const router = new express.Router()
+
+router.post('/users', async (req, res) => { ... })
+router.get('/users', async (req, res) => { ... })
+router.get('/users/:id', async (req, res) => { ... })
+router.patch('/users/:id', async (req, res) => { ... })
+router.delete('/users/:id', async (req, res) => { ... })
+
+module.exports = router
 ```
 
 **[⬆ back to top](#table-of-contents)**
