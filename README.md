@@ -82,6 +82,7 @@
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
     - [Securely Storing Passwords](#securely-storing-passwords)
     - [Logging in Users](#logging-in-users)
+    - [JSON Web Tokens](#json-web-tokens)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
@@ -2713,6 +2714,22 @@ router.post('/users/login', async (req, res) => {
     res.status(400).send()
   }
 })
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### JSON Web Tokens
+
+```javascript
+const jwt = require('jsonwebtoken')
+
+const myFunction = async () => {
+  const token = jwt.sign({ _id: 'abc123' }, 'thisismynewcourse', { expiresIn: '7 days' })
+  
+  const data = jwt.verify(token, 'thisismynewcourse')
+}
+
+myFunction()
 ```
 
 **[⬆ back to top](#table-of-contents)**
