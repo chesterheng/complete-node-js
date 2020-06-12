@@ -75,6 +75,7 @@
     - [Resource Reading Endpoints](#resource-reading-endpoints)
     - [Promise Chaining](#promise-chaining)
     - [Async/Await](#asyncawait)
+    - [Integrating Async/Await](#integrating-asyncawait)
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
@@ -2348,6 +2349,80 @@ doWork()
   .then(result => console.log('result', result))
   .catch(error => console.log('error', error))
 ```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Integrating Async/Await
+
+```javascript
+app.post('/users', async (req, res) => {
+  const user = new User(req.body)
+
+  try {
+    await user.save()
+    res.status(201).send(user)
+  } catch (error) {
+    res.status(400).send(error)
+  }
+})
+
+app.get('/users', async(req, res) => {
+  try {
+    const users = await User.find({})
+    res.send(users)
+  } catch (error) {
+    res.status(500).send()
+  }
+})
+
+app.get('/users/:id', (req, res) => {
+  const _id = req.params.id
+  try {
+    const user = await User.findById(_id)
+    if (!user) {
+        return res.status(404).send()
+    }
+    res.send(user)
+  } catch (error) {
+    res.status(500).send()
+  }
+})
+
+app.post('/tasks', (req, res) => {
+  const task = new Task(req.body)
+  try {
+    task.save()
+    res.status(201).send(task)
+  } catch (error) {
+    res.status(400).send(error)
+  }
+})
+
+app.get('/tasks', (req, res) => {
+  try {
+    const tasks = Task.find({})
+    res.send(tasks)
+  } catch (error) {
+    res.status(500).send()
+  }
+})
+
+app.get('/tasks/:id', (req, res) => {
+  const _id = req.params.id
+
+  try {
+    const task = Task.findById(_id)
+    if (!task) {
+        return res.status(404).send()
+    }
+    res.send(task)
+  } catch (error) {
+    res.status(500).send()
+  }
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
 
 ## **Section 12: API Authentication and Security (Task App)**
 
