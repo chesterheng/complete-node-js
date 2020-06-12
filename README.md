@@ -84,6 +84,7 @@
     - [Logging in Users](#logging-in-users)
     - [JSON Web Tokens](#json-web-tokens)
     - [Generating Authentication Tokens](#generating-authentication-tokens)
+    - [Express Middleware](#express-middleware)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
@@ -2785,6 +2786,26 @@ router.post('/users/login', async (req, res) => {
   } catch (error) {
     res.status(400).send()
   }
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Express Middleware
+
+```javascript
+app.use((req, res, next) => {
+  if (req.method === 'GET') {
+    res.send('GET requests are disabled')
+  } else {
+    next()
+  }
+})
+```
+
+```javascript
+app.use((req, res, next) => {
+  res.status(503).send('Site is currently down. Check back soon!')
 })
 ```
 
