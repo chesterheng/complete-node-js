@@ -83,6 +83,7 @@
     - [Securely Storing Passwords](#securely-storing-passwords)
     - [Logging in Users](#logging-in-users)
     - [JSON Web Tokens](#json-web-tokens)
+    - [Generating Authentication Tokens](#generating-authentication-tokens)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
@@ -2730,6 +2731,61 @@ const myFunction = async () => {
 }
 
 myFunction()
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Generating Authentication Tokens
+
+```javascript
+// src/models/user.js
+const userSchema = new mongoose.Schema({
+  name: { ... },
+  email: { ... },
+  password: { ... },
+  age: { ... },
+  tokens: [{
+    token: {
+        type: String,
+        required: true
+    }
+  }]
+})
+
+userSchema.methods.generateAuthToken = async () => {
+  const user = this
+  const token = jwt.sign({ _id: user._id.toString() }, 'thisismynewcourse')
+
+  user.tokens = user.tokens.concat({ token })
+  await user.save()
+
+  return token
+}
+```
+
+```javascript
+// src/routers/user.js
+router.post('/users', async (req, res) => {
+  const user = new User(req.body)
+
+  try {
+    await user.save()
+    const token = await user.generateAuthToken()
+    res.status(201).send({ user, token })
+  } catch (error) {
+    res.status(400).send(error)
+  }
+})
+
+router.post('/users/login', async (req, res) => {
+  try {
+    const user = await User.findByCredentials(req.body.email, req.body.password)
+    const token = await user.generateAuthToken()
+    res.send({ user, token })
+  } catch (error) {
+    res.status(400).send()
+  }
+})
 ```
 
 **[⬆ back to top](#table-of-contents)**
