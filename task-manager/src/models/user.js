@@ -43,13 +43,13 @@ const userSchema = new mongoose.Schema({
   },
   tokens: [{
     token: {
-        type: String,
-        required: true
+      type: String,
+      required: true
     }
   }]
 })
 
-userSchema.methods.generateAuthToken = async () => {
+userSchema.methods.generateAuthToken = async function () {
   const user = this
   const token = jwt.sign({ _id: user._id.toString() }, 'thisismynewcourse')
 

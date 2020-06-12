@@ -85,6 +85,7 @@
     - [JSON Web Tokens](#json-web-tokens)
     - [Generating Authentication Tokens](#generating-authentication-tokens)
     - [Express Middleware](#express-middleware)
+    - [Accepting Authentication Tokens](#accepting-authentication-tokens)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
@@ -2753,10 +2754,9 @@ const userSchema = new mongoose.Schema({
   }]
 })
 
-userSchema.methods.generateAuthToken = async () => {
+userSchema.methods.generateAuthToken = async function () {
   const user = this
   const token = jwt.sign({ _id: user._id.toString() }, 'thisismynewcourse')
-
   user.tokens = user.tokens.concat({ token })
   await user.save()
 
@@ -2793,6 +2793,9 @@ router.post('/users/login', async (req, res) => {
 
 ### Express Middleware
 
+- without middleware: new request -> run route handler
+- with middleware: new request -> do something -> run route handler
+
 ```javascript
 app.use((req, res, next) => {
   if (req.method === 'GET') {
@@ -2806,6 +2809,43 @@ app.use((req, res, next) => {
 ```javascript
 app.use((req, res, next) => {
   res.status(503).send('Site is currently down. Check back soon!')
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Accepting Authentication Tokens
+
+Authorization: <type> <token>
+
+```javascript
+// src/middleware/auth.js
+const jwt = require('jsonwebtoken')
+const User = require('../models/user')
+
+const auth = async (req, res, next) => {
+  try {
+    const token = req.header('Authorization').replace('Bearer ', '')
+    const decoded = jwt.verify(token, 'thisismynewcourse')
+    const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
+
+    if (!user) {
+      throw new Error()
+    }
+
+    req.user = user
+    next()
+  } catch (error) {
+    res.status(401).send({ error: 'Please authenticate.' })
+  }
+}
+
+module.exports = auth
+```
+
+```javascript
+router.get('/users/me', auth, async (req, res) => {
+  res.send(req.user)
 })
 ```
 
