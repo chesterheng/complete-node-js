@@ -90,6 +90,8 @@
     - [Logging Out](#logging-out)
     - [Hiding Private Data](#hiding-private-data)
     - [Authenticating User Endpoints](#authenticating-user-endpoints)
+    - [The User/Task Relationship](#the-usertask-relationship)
+    - [Authenticating Task Endpoints](#authenticating-task-endpoints)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
@@ -2995,6 +2997,79 @@ router.delete('/users/me', auth, async (req, res) => {
   }
 })
 ```
+
+**[⬆ back to top](#table-of-contents)**
+
+### The User/Task Relationship
+
+```javascript
+const Task = mongoose.model('Task', {
+  description: { ... },
+  completed: { ... },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
+  }
+})
+
+module.exports = Task
+```
+
+```javascript
+const userSchema = new mongoose.Schema({
+  name: { ... },
+  email: { ... },
+  password: { ... },
+  age: { .., },
+  tokens: [ ... ]
+})
+
+// virtual field in User
+userSchema.virtual('tasks', {
+  ref: 'Task',
+  localField: '_id',
+  foreignField: 'owner'
+})
+...
+const User = mongoose.model('User', userSchema)
+
+module.exports = User
+```
+
+```javascript
+router.post('/tasks', auth, async (req, res) => {
+  const task = new Task({
+    ...req.body,
+    owner: req.user._id
+  })
+
+  try {
+    await task.save()
+    res.status(201).send(task)
+  } catch (e) {
+    res.status(400).send(e)
+  }
+})
+```
+
+```javascript
+  const task = await Task.findById('5c2e505a3253e18a43e612e6')
+  await task.populate('owner').execPopulate()
+  console.log(task.owner)
+```
+
+```javascript
+  const user = await User.findById('5c2e4dcb5eac678a23725b5b')
+  await user.populate('tasks').execPopulate()
+  console.log(user.tasks)
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Authenticating Task Endpoints
+
+
 
 **[⬆ back to top](#table-of-contents)**
 
