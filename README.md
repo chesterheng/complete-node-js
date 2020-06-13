@@ -107,6 +107,7 @@
     - [Serving up Files](#serving-up-files)
     - [Auto-Cropping and Image Formatting](#auto-cropping-and-image-formatting)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
+    - [Exploring SendGrid](#exploring-sendgrid)
   - [**Section 16: Testing Node.js (Task App)**](#section-16-testing-nodejs-task-app)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
@@ -3507,6 +3508,27 @@ userSchema.methods.toJSON = function () {
 **[⬆ back to top](#table-of-contents)**
 
 ## **Section 15: Sending Emails (Task App)**
+
+### Exploring SendGrid
+
+- [SendGrid](https://sendgrid.com/)
+- [Single Sender Verification](https://sendgrid.com/docs/ui/sending-email/sender-verification/)
+- [Integrate](https://app.sendgrid.com/guide/integrate)
+- [sendgrid-nodejs](https://github.com/sendgrid/sendgrid-nodejs)
+- [Activity Feed](https://app.sendgrid.com/email_activity)
+
+```javascript
+require('dotenv').config()
+const sgMail = require('@sendgrid/mail')
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+sgMail.send({
+    to: 'chester.heng@gmail.com',
+    from: 'chester.heng@gmail.com',
+    subject: 'This is my first creation!',
+    text: 'I hope this one actually get to you.'
+}) 
+```
 
 **[⬆ back to top](#table-of-contents)**
 
