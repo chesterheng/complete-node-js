@@ -103,6 +103,7 @@
     - [Validating File Uploads](#validating-file-uploads)
     - [Validation Challenge](#validation-challenge)
     - [Handling Express Errors](#handling-express-errors)
+    - [Adding Images to User Profile](#adding-images-to-user-profile)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
   - [**Section 16: Testing Node.js (Task App)**](#section-16-testing-nodejs-task-app)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
@@ -2080,6 +2081,7 @@ db.collection('tasks')
   .catch(error => console.log(error))
 ```
 
+**[⬆ back to top](#table-of-contents)**
 
 ## **Section 11: REST APIs and Mongoose (Task App)**
 
@@ -3383,6 +3385,57 @@ router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
 ```
 
 **[⬆ back to top](#table-of-contents)**
+
+### Adding Images to User Profile
+
+```javascript
+const userSchema = new mongoose.Schema({
+  name: { ... },
+  email: { ... },
+  password: { ... },
+  age: { ... },
+  tokens: [ ... ],
+  avatar: {
+    type: Buffer
+  }
+}, {
+  timestamps: true
+})
+```
+
+```javascript
+router.post('/users/me/avatar', auth, 
+  upload.single('avatar'), async (req, res) => {
+  req.user.avatar = req.file.buffer
+  await req.user.save()
+  res.send()
+}, (error, req, res, next) => {
+  res.status(400).send({ error: error.message })
+})
+
+router.delete('/users/me/avatar', auth, async (req, res) => {
+  req.user.avatar = undefined
+  await req.user.save()
+  res.send()
+})
+```
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+  <h1>Image</h1>
+  <!-- copy binary data from avatar field in user -->
+  <!-- add data after base64 -->
+  <img src="data:image/jpg;base64,/9j/4AAQSkZJRgABAQAASA...">
+</body>
+</html>
+```
 
 ## **Section 15: Sending Emails (Task App)**
 
