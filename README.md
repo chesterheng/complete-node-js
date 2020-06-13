@@ -99,6 +99,7 @@
     - [Paginating Data](#paginating-data)
     - [Sorting Data](#sorting-data)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
+    - [Adding Support for File Uploads](#adding-support-for-file-uploads)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
   - [**Section 16: Testing Node.js (Task App)**](#section-16-testing-nodejs-task-app)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
@@ -3298,6 +3299,24 @@ router.get('/tasks', auth, async (req, res) => {
 **[⬆ back to top](#table-of-contents)**
 
 ## **Section 14: File Uploads (Task App)**
+
+### Adding Support for File Uploads
+
+[multer](https://github.com/expressjs/multer)
+[Course Images](http://links.mead.io/files)
+
+```javascript
+const multer = require('multer')
+const upload = multer({
+  dest: 'avatars'
+})
+
+router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
+  res.send()
+})
+```
+
+![](post-avatar.jpg)
 
 **[⬆ back to top](#table-of-contents)**
 
