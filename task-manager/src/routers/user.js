@@ -48,6 +48,7 @@ router.post('/users/logoutAll', auth, async (req, res) => {
 })
 
 router.get('/users/me', auth, async (req, res) => {
+  await req.user.populate('tasks').execPopulate()
   res.send(req.user)
 })
 

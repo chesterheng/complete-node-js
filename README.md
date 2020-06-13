@@ -92,6 +92,7 @@
     - [Authenticating User Endpoints](#authenticating-user-endpoints)
     - [The User/Task Relationship](#the-usertask-relationship)
     - [Authenticating Task Endpoints](#authenticating-task-endpoints)
+    - [Cascade Delete Tasks](#cascade-delete-tasks)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
@@ -3065,6 +3066,18 @@ router.post('/tasks', auth, async (req, res) => {
   console.log(user.tasks)
 ```
 
+```javascript
+userSchema.set('toObject', { virtuals: true });
+userSchema.set('toJSON', { virtuals: true });
+```
+
+```javascript
+router.get('/users/me', auth, async (req, res) => {
+  await req.user.populate('tasks').execPopulate()
+  res.send(req.user)
+})
+```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Authenticating Task Endpoints
@@ -3131,6 +3144,18 @@ router.delete('/tasks/:id', auth, async (req, res) => {
   } catch (error) {
     res.status(500).send()
   }
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Cascade Delete Tasks
+
+```javascript
+userSchema.pre('remove', async function (next) {
+  const user = this
+  await Task.deleteMany({ owner: user._id })
+  next()
 })
 ```
 
