@@ -87,6 +87,7 @@
     - [Express Middleware](#express-middleware)
     - [Accepting Authentication Tokens](#accepting-authentication-tokens)
     - [Advanced Postman](#advanced-postman)
+    - [Logging Out](#logging-out)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
@@ -2869,6 +2870,59 @@ if (pm.response.code === 200) {
 if (pm.response.code === 201) {
     pm.environment.set('authToken',pm.response.json().token)
 }
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Logging Out
+
+```javascript
+router.post('/users/logout', auth, async (req, res) => {
+  try {
+    req.user.tokens = 
+      req.user.tokens.filter(token => token.token !== req.token)
+    await req.user.save()
+
+    res.send()
+  } catch (error) {
+    res.status(500).send()
+  }
+})
+
+router.post('/users/logoutAll', auth, async (req, res) => {
+  try {
+    req.user.tokens = []
+    await req.user.save()
+    res.send()
+  } catch (error) {
+    res.status(500).send()
+  }
+})
+```
+
+```javascript
+const jwt = require('jsonwebtoken')
+const User = require('../models/user')
+
+const auth = async (req, res, next) => {
+  try {
+    const token = req.header('Authorization').replace('Bearer ', '')
+    const decoded = jwt.verify(token, 'thisismynewcourse')
+    const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
+
+    if (!user) {
+      throw new Error()
+    }
+    
+    req.token = token
+    req.user = user
+    next()
+  } catch (error) {
+    res.status(401).send({ error: 'Please authenticate.' })
+  }
+}
+
+module.exports = auth
 ```
 
 **[⬆ back to top](#table-of-contents)**
