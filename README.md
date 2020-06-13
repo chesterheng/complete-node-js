@@ -86,6 +86,7 @@
     - [Generating Authentication Tokens](#generating-authentication-tokens)
     - [Express Middleware](#express-middleware)
     - [Accepting Authentication Tokens](#accepting-authentication-tokens)
+    - [Advanced Postman](#advanced-postman)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
@@ -2847,6 +2848,27 @@ module.exports = auth
 router.get('/users/me', auth, async (req, res) => {
   res.send(req.user)
 })
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Advanced Postman
+
+[Managing environments](https://learning.postman.com/docs/postman/variables-and-environments/managing-environments/)
+
+![](postman-environment.jpg)
+
+
+```javascript
+// Login User - Tests
+if (pm.response.code === 200) {
+    pm.environment.set('authToken',pm.response.json().token)
+}
+
+// Create User - Tests
+if (pm.response.code === 201) {
+    pm.environment.set('authToken',pm.response.json().token)
+}
 ```
 
 **[⬆ back to top](#table-of-contents)**
