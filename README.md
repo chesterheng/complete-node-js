@@ -114,6 +114,7 @@
   - [**Section 16: Testing Node.js (Task App)**](#section-16-testing-nodejs-task-app)
     - [Jest Testing Framework](#jest-testing-framework)
     - [Writing Tests and Assertions](#writing-tests-and-assertions)
+    - [Writing Your Own Tests](#writing-your-own-tests)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
@@ -3667,6 +3668,14 @@ npm test
 ### Writing Tests and Assertions
 
 ```javascript
+const calculateTip = (total, tipPercent = .25) => total + (total * tipPercent)
+
+module.exports = {
+  calculateTip
+}
+```
+
+```javascript
 const { calculateTip } = require('../src/math')
 
 test('Should calculate total with tip', () => {
@@ -3677,6 +3686,34 @@ test('Should calculate total with tip', () => {
 test('Should calculate total with default tip', () => {
   const total = calculateTip(10)
   expect(total).toBe(12.5)
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Writing Your Own Tests
+
+```javascript
+const fahrenheitToCelsius = (temp) => (temp - 32) / 1.8
+const celsiusToFahrenheit = (temp) => (temp * 1.8) + 32
+
+module.exports = {
+  fahrenheitToCelsius,
+  celsiusToFahrenheit
+}
+```
+
+```javascript
+const { celsiusToFahrenheit, fahrenheitToCelsius } = require('../src/math')
+
+test('Should convert 32 F to 0 C', () => {
+  const temp = fahrenheitToCelsius(32)
+  expect(temp).toBe(0)
+})
+
+test('Should convert 0 C to 32 F', () => {
+  const temp = celsiusToFahrenheit(0)
+  expect(temp).toBe(32)
 })
 ```
 
