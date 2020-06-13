@@ -117,6 +117,7 @@
     - [Writing Your Own Tests](#writing-your-own-tests)
     - [Testing Asynchronous Code](#testing-asynchronous-code)
     - [Testing an Express Application](#testing-an-express-application)
+    - [Jest Setup and Teardown](#jest-setup-and-teardown)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
@@ -3796,6 +3797,51 @@ test('Should signup a new user', async () => {
     email: 'andrew@example.com',
     password: 'MyPass777!'
   }).expect(201)
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Jest Setup and Teardown
+
+[Setup and Teardown](https://jestjs.io/docs/en/setup-teardown)
+
+```javascript
+const request = require('supertest')
+const app = require('../src/app')
+const User = require('../src/models/user')
+
+const userOne = {
+  name: 'Mike',
+  email: 'mike@example.com',
+  password: '56what!!'
+}
+
+beforeEach(async () => {
+  await User.deleteMany()
+  await new User(userOne).save()
+})
+
+test('Should signup a new user', async () => {
+  await request(app).post('/users').send({
+    name: 'Andrew',
+    email: 'andrew@example.com',
+    password: 'MyPass777!'
+  }).expect(201)
+})
+
+test('Should login existing user', async () => {
+  await request(app).post('/users/login').send({
+    email: userOne.email,
+    password: userOne.password
+  }).expect(200)
+})
+
+test('Should not login nonexistent user', async () => {
+  await request(app).post('/users/login').send({
+    email: userOne.email,
+    password: 'thisisnotmypass'
+  }).expect(400)
 })
 ```
 
