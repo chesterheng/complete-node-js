@@ -95,6 +95,7 @@
     - [Cascade Delete Tasks](#cascade-delete-tasks)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
     - [Working with Timestamps](#working-with-timestamps)
+    - [Filtering Data](#filtering-data)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
   - [**Section 16: Testing Node.js (Task App)**](#section-16-testing-nodejs-task-app)
@@ -3197,6 +3198,32 @@ const taskSchema = new mongoose.Schema({
 const Task = mongoose.model('Task', taskSchema)
 
 module.exports = Task
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Filtering Data
+
+```javascript
+// {{url}}/tasks?completed=true
+// {{url}}/tasks?completed=false
+router.get('/tasks', auth, async (req, res) => {
+  const match = {}
+
+  if (req.query.completed) {
+    match.completed = req.query.completed === 'true'
+  }
+
+  try {
+    await req.user.populate({
+      path: 'tasks',
+      match
+    }).execPopulate()
+    res.send(req.user.tasks)
+  } catch (error) {
+    res.status(500).send()
+  }
+})
 ```
 
 **[⬆ back to top](#table-of-contents)**
