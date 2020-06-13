@@ -108,6 +108,7 @@
     - [Auto-Cropping and Image Formatting](#auto-cropping-and-image-formatting)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
     - [Exploring SendGrid](#exploring-sendgrid)
+    - [Sending Welcome and Cancelation Emails](#sending-welcome-and-cancelation-emails)
   - [**Section 16: Testing Node.js (Task App)**](#section-16-testing-nodejs-task-app)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
@@ -3523,11 +3524,72 @@ const sgMail = require('@sendgrid/mail')
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 sgMail.send({
-    to: 'chester.heng@gmail.com',
-    from: 'chester.heng@gmail.com',
+    to: process.env.RECEIVER_EMAIL,
+    from: process.env.SENDER_EMAIL,
     subject: 'This is my first creation!',
     text: 'I hope this one actually get to you.'
 }) 
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Sending Welcome and Cancelation Emails
+
+```javascript
+require('dotenv').config()
+const sgMail = require('@sendgrid/mail')
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+
+const sendWelcomeEmail = (email, name) => {
+  sgMail.send({
+    to: email,
+    from: process.env.SENDER_EMAIL,
+    subject: 'Thanks for joining in!',
+    text: `Welcome to the app, ${name}. Let me know how you get along with the app.`
+  }) 
+}
+
+const sendCancelationEmail = (email, name) => {
+  sgMail.send({
+    to: email,
+    from: process.env.SENDER_EMAIL,
+    subject: 'Sorry to see you go!',
+    text: `Goodbye, ${name}. I hope to see you back sometime soon.`
+  })
+}
+
+module.exports = {
+  sendWelcomeEmail,
+  sendCancelationEmail
+}
+```
+
+```javascript
+const { sendWelcomeEmail, sendCancelationEmail } = require('../emails/account')
+
+router.post('/users', async (req, res) => {
+  const user = new User(req.body)
+
+  try {
+    await user.save()
+    sendWelcomeEmail(user.email, user.name)
+    const token = await user.generateAuthToken()
+    res.status(201).send({ user, token })
+  } catch (error) {
+    res.status(400).send(error)
+  }
+})
+
+router.delete('/users/me', auth, async (req, res) => {
+  try {
+    await req.user.remove()
+    sendCancelationEmail(req.user.email, req.user.name)
+    res.send(req.user)
+  } catch (error) {
+    res.status(500).send()
+  }
+})
 ```
 
 **[⬆ back to top](#table-of-contents)**
