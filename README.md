@@ -88,6 +88,7 @@
     - [Accepting Authentication Tokens](#accepting-authentication-tokens)
     - [Advanced Postman](#advanced-postman)
     - [Logging Out](#logging-out)
+    - [Hiding Private Data](#hiding-private-data)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
@@ -2923,6 +2924,36 @@ const auth = async (req, res, next) => {
 }
 
 module.exports = auth
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Hiding Private Data
+
+```javascript
+const user = {
+  name: "Freddie Phillips"
+}
+
+user.toJSON = function () {
+  this.email = "freddie.phillips@example.com"
+  return this
+}
+
+JSON.stringify(user)
+```
+
+```javascript
+userSchema.methods.toJSON = function () {
+  const user = this
+  console.log(user)
+  const userObject = user.toObject()
+
+  delete userObject.password
+  delete userObject.tokens
+
+  return userObject
+}
 ```
 
 **[⬆ back to top](#table-of-contents)**
