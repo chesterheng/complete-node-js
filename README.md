@@ -115,6 +115,7 @@
     - [Jest Testing Framework](#jest-testing-framework)
     - [Writing Tests and Assertions](#writing-tests-and-assertions)
     - [Writing Your Own Tests](#writing-your-own-tests)
+    - [Testing Asynchronous Code](#testing-asynchronous-code)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
@@ -3659,6 +3660,16 @@ test('This should fail', () => {
 })
 ```
 
+```json
+{
+  ...
+  "scripts": {
+    "test": "jest --watch"
+  },
+  ...
+}
+```
+
 ```console
 npm test
 ```
@@ -3714,6 +3725,42 @@ test('Should convert 32 F to 0 C', () => {
 test('Should convert 0 C to 32 F', () => {
   const temp = celsiusToFahrenheit(0)
   expect(temp).toBe(32)
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Testing Asynchronous Code
+
+```javascript
+const add = (a, b) => new Promise((resolve, reject) => {
+  setTimeout(() => {
+    if (a < 0 || b < 0) {
+      return reject('Numbers must be non-negative')
+    }
+
+    resolve(a + b)
+  }, 2000)
+})
+
+module.exports = {
+  add
+}
+```
+
+```javascript
+test('Should add two numbers', done => {
+  add(2, 3).then(sum => {
+    expect(sum).toBe(5)
+    // call done() after async is complete
+    // make sure jest wait for setTimeout is completed
+    done()
+  })
+})
+
+test('Should add two numbers async/await', async () => {
+  const sum = await add(10, 22)
+  expect(sum).toBe(32) 
 })
 ```
 
