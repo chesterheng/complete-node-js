@@ -109,6 +109,7 @@
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
     - [Exploring SendGrid](#exploring-sendgrid)
     - [Sending Welcome and Cancelation Emails](#sending-welcome-and-cancelation-emails)
+    - [Environment Variables](#environment-variables)
   - [**Section 16: Testing Node.js (Task App)**](#section-16-testing-nodejs-task-app)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
@@ -3593,6 +3594,24 @@ router.delete('/users/me', auth, async (req, res) => {
 ```
 
 **[⬆ back to top](#table-of-contents)**
+
+### Environment Variables
+
+- [Managing environment variables in Nodejs and Modern JS apps](https://medium.com/dubizzletechblog/managing-environment-variables-in-nodejs-and-modern-js-apps-608003f4686c)
+- [dotenv](https://github.com/motdotla/dotenv)
+- [env-cmd](https://www.npmjs.com/package/env-cmd)
+- task-manager/config/dev.env
+
+```json
+{
+  ...
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "env-cmd -f ./config/dev.env nodemon src/index.js"
+  },
+  ...
+}
+```
 
 ## **Section 16: Testing Node.js (Task App)**
 
