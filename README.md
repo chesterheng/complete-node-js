@@ -121,6 +121,7 @@
     - [Testing with Authentication](#testing-with-authentication)
     - [Advanced Assertions](#advanced-assertions)
     - [Mocking Libraries](#mocking-libraries)
+    - [Wrapping up User Tests](#wrapping-up-user-tests)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
@@ -3994,6 +3995,44 @@ module.exports = {
 
   }
 } 
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Wrapping up User Tests
+
+```javascript
+test('Should upload avatar image', async () => {
+  await request(app)
+    .post('/users/me/avatar')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .attach('avatar', 'tests/fixtures/profile-pic.jpg')
+    .expect(200)
+  const user = await User.findById(userOneId)
+  expect(user.avatar).toEqual(expect.any(Buffer))
+})
+
+test('Should update valid user fields', async () => {
+  await request(app)
+    .patch('/users/me')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .send({
+      name: 'Jess'
+    })
+    .expect(200)
+  const user = await User.findById(userOneId)
+  expect(user.name).toEqual('Jess')
+})
+
+test('Should not update invalid user fields', async () => {
+  await request(app)
+    .patch('/users/me')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .send({
+        location: 'Philadelphia'
+    })
+    .expect(400)
+})
 ```
 
 **[⬆ back to top](#table-of-contents)**
