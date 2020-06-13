@@ -112,6 +112,7 @@
     - [Environment Variables](#environment-variables)
     - [Creating a Production MongoDB Database](#creating-a-production-mongodb-database)
   - [**Section 16: Testing Node.js (Task App)**](#section-16-testing-nodejs-task-app)
+    - [Jest Testing Framework](#jest-testing-framework)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
@@ -3631,6 +3632,30 @@ Cluster0
 **[⬆ back to top](#table-of-contents)**
 
 ## **Section 16: Testing Node.js (Task App)**
+
+### Jest Testing Framework
+
+Why test?
+
+- Saves time
+- Creates reliable software
+- Gives flexibility to developers
+  - Refactoring
+  - Collaborating
+  - Profiling
+- Peace of mind
+
+[Jest](https://jestjs.io/)
+
+```javascript
+test('Hello world!', () => {
+
+})
+
+test('This should fail', () => {
+    throw new Error('Failure!')
+})
+```
 
 **[⬆ back to top](#table-of-contents)**
 
