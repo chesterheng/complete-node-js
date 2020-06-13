@@ -122,6 +122,7 @@
     - [Advanced Assertions](#advanced-assertions)
     - [Mocking Libraries](#mocking-libraries)
     - [Wrapping up User Tests](#wrapping-up-user-tests)
+    - [Setup Task Test Suite](#setup-task-test-suite)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
@@ -4032,6 +4033,73 @@ test('Should not update invalid user fields', async () => {
         location: 'Philadelphia'
     })
     .expect(400)
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Setup Task Test Suite
+
+```javascript
+// src/tests/fixtures/db.js
+const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken')
+const User = require('../../src/models/user')
+
+const userOneId = new mongoose.Types.ObjectId()
+const userOne = {
+  _id: userOneId,
+  name: 'Mike',
+  email: 'mike@example.com',
+  password: '56what!!',
+  tokens: [{
+    token: jwt.sign({ _id: userOneId }, process.env.JWT_SECRET)
+  }]
+}
+
+const setupDatabase = async () => {
+  await User.deleteMany()
+  await new User(userOne).save()
+}
+
+module.exports = {
+  userOneId,
+  userOne,
+  setupDatabase
+}
+```
+
+```javascript
+// src/tests/user.test.js
+const request = require('supertest')
+const app = require('../src/app')
+const User = require('../src/models/user')
+const { userOneId, userOne, setupDatabase } = require('./fixtures/db')
+
+beforeEach(setupDatabase)
+...
+```
+
+```javascript
+// src/tests/task.test.js
+const request = require('supertest')
+const app = require('../src/app')
+const Task = require('../src/models/task')
+const { userOneId, userOne, setupDatabase } = require('./fixtures/db')
+
+beforeEach(setupDatabase)
+
+test('Should create task for user', async () => {
+  const response = await request(app)
+    .post('/tasks')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .send({
+      description: 'From my test'
+    })
+    .expect(201)
+  const task = await Task.findById(response.body._id)
+  expect(task).not.toBeNull()
+  expect(task.completed).toEqual(false)
 })
 ```
 
