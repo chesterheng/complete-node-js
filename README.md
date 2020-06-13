@@ -118,6 +118,7 @@
     - [Testing Asynchronous Code](#testing-asynchronous-code)
     - [Testing an Express Application](#testing-an-express-application)
     - [Jest Setup and Teardown](#jest-setup-and-teardown)
+    - [Testing with Authentication](#testing-with-authentication)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
@@ -3842,6 +3843,65 @@ test('Should not login nonexistent user', async () => {
     email: userOne.email,
     password: 'thisisnotmypass'
   }).expect(400)
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Testing with Authentication
+
+```javascript
+const request = require('supertest')
+const jwt = require('jsonwebtoken')
+const mongoose = require('mongoose')
+const app = require('../src/app')
+const User = require('../src/models/user')
+
+const userOneId = new mongoose.Types.ObjectId()
+
+const userOne = {
+  _id: userOneId,
+  name: 'Mike',
+  email: 'mike@example.com',
+  password: '56what!!',
+  tokens: [{
+    token: jwt.sign({ _id: userOneId }, process.env.JWT_SECRET)
+  }]
+}
+
+beforeEach(async () => {
+  await User.deleteMany()
+  await new User(userOne).save()
+})
+
+test('Should get profile for user', async () => {
+  await request(app)
+    .get('/users/me')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .send()
+    .expect(200)
+})
+
+test('Should not get profile for unauthenticated user', async () => {
+  await request(app)
+    .get('/users/me')
+    .send()
+    .expect(401)
+})
+
+test('Should delete account for user', async () => {
+  await request(app)
+    .delete('/users/me')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .send()
+    .expect(200)
+})
+
+test('Should not delete account for unauthenticate user', async () => {
+  await request(app)
+    .delete('/users/me')
+    .send()
+    .expect(401)
 })
 ```
 
