@@ -124,6 +124,7 @@
     - [Wrapping up User Tests](#wrapping-up-user-tests)
     - [Setup Task Test Suite](#setup-task-test-suite)
     - [Testing with Task Data](#testing-with-task-data)
+    - [Extra Test Ideas](#extra-test-ideas)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
@@ -4227,6 +4228,32 @@ test('Should not delete other users tasks', async () => {
   expect(task).not.toBeNull()
 })
 ```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Extra Test Ideas
+
+User Test Ideas
+
+- Should not signup user with invalid name/email/password
+- Should not update user if unauthenticated
+- Should not update user with invalid name/email/password
+- Should not delete user if unauthenticated
+
+Task Test Ideas
+
+- Should not create task with invalid description/completed
+- Should not update task with invalid description/completed
+- Should delete user task
+- Should not delete task if unauthenticated
+- Should not update other users task
+- Should fetch user task by id
+- Should not fetch user task by id if unauthenticated
+- Should not fetch other users task by id
+- Should fetch only completed tasks
+- Should fetch only incomplete tasks
+- Should sort tasks by description/completed/createdAt/updatedAt
+- Should fetch page of tasks
 
 **[⬆ back to top](#table-of-contents)**
 
