@@ -89,6 +89,7 @@
     - [Advanced Postman](#advanced-postman)
     - [Logging Out](#logging-out)
     - [Hiding Private Data](#hiding-private-data)
+    - [Authenticating User Endpoints](#authenticating-user-endpoints)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
@@ -2954,6 +2955,45 @@ userSchema.methods.toJSON = function () {
 
   return userObject
 }
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Authenticating User Endpoints
+
+req (from auth middleware)
+  - user
+  - token
+
+```javascript
+router.patch('/users/me', auth, async (req, res) => {
+  const updates = Object.keys(req.body)
+  const allowedUpdates = ['name', 'email', 'password', 'age']
+  const isValidOperation = updates.every(update => allowedUpdates.includes(update))
+
+  if (!isValidOperation) {
+    return res.status(400).send({ error: 'Invalid updates!' })
+  }
+
+  try {
+    updates.forEach(update => 
+      req.user[update] = req.body[update])
+    await req.user.save()
+    res.send(req.user)
+  } catch (error) {
+    res.status(400).send(error)
+  }
+})
+
+router.delete('/users/me', auth, async (req, res) => {
+  try {
+    await req.user.remove()
+
+    res.send(req.user)
+  } catch (error) {
+    res.status(500).send()
+  }
+})
 ```
 
 **[⬆ back to top](#table-of-contents)**
