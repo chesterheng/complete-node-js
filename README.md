@@ -126,6 +126,7 @@
     - [Testing with Task Data](#testing-with-task-data)
     - [Extra Test Ideas](#extra-test-ideas)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
+    - [Creating the Chat App Project](#creating-the-chat-app-project)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
 ## **Section 1: Welcome**
@@ -4258,6 +4259,41 @@ Task Test Ideas
 **[⬆ back to top](#table-of-contents)**
 
 ## **Section 17: Real-Time Web Applications with Socket.io (Chat App)**
+
+### Creating the Chat App Project
+
+chat-app
+
+-  public/index.html
+-  src/index.js
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+
+  </head>
+  <body>
+      Chat App
+  </body>
+</html>
+```
+
+```javascript
+const path = require('path')
+const express = require('express')
+
+const app = express()
+
+const port = process.env.PORT || 3000
+const publicDirectoryPath = path.join(__dirname, '../public')
+
+app.use(express.static(publicDirectoryPath))
+
+app.listen(port, () => {
+  console.log(`Server is up on port ${port}!`)
+})
+```
 
 **[⬆ back to top](#table-of-contents)**
 
