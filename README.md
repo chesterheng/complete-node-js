@@ -116,6 +116,7 @@
     - [Writing Tests and Assertions](#writing-tests-and-assertions)
     - [Writing Your Own Tests](#writing-your-own-tests)
     - [Testing Asynchronous Code](#testing-asynchronous-code)
+    - [Testing an Express Application](#testing-an-express-application)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
@@ -3761,6 +3762,40 @@ test('Should add two numbers', done => {
 test('Should add two numbers async/await', async () => {
   const sum = await add(10, 22)
   expect(sum).toBe(32) 
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Testing an Express Application
+
+[SuperTest](https://github.com/visionmedia/supertest)
+
+```javascript
+const express = require('express')
+require('./db/mongoose')
+const userRouter = require('./routers/user')
+const taskRouter = require('./routers/task')
+
+const app = express()
+
+app.use(express.json())
+app.use(userRouter)
+app.use(taskRouter)
+
+module.exports = app 
+```
+
+```javascript
+const request = require('supertest')
+const app = require('../src/app')
+
+test('Should signup a new user', async () => {
+  await request(app).post('/users').send({
+    name: 'Andrew',
+    email: 'andrew@example.com',
+    password: 'MyPass777!'
+  }).expect(201)
 })
 ```
 
