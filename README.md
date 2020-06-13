@@ -123,6 +123,7 @@
     - [Mocking Libraries](#mocking-libraries)
     - [Wrapping up User Tests](#wrapping-up-user-tests)
     - [Setup Task Test Suite](#setup-task-test-suite)
+    - [Testing with Task Data](#testing-with-task-data)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
@@ -3777,6 +3778,16 @@ test('Should add two numbers async/await', async () => {
 
 [SuperTest](https://github.com/visionmedia/supertest)
 
+```json
+{
+  ...
+  "scripts": {
+    "test": "env-cmd -f ./config/test.env jest --watch --runInBand"
+  },
+  ...
+}
+```
+
 ```javascript
 const express = require('express')
 require('./db/mongoose')
@@ -4100,6 +4111,120 @@ test('Should create task for user', async () => {
   const task = await Task.findById(response.body._id)
   expect(task).not.toBeNull()
   expect(task.completed).toEqual(false)
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Testing with Task Data
+
+```javascript
+// /src/tests/fixtures/db.js
+const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken')
+const User = require('../../src/models/user')
+const Task = require('../../src/models/task')
+
+const userOneId = new mongoose.Types.ObjectId()
+const userOne = {
+  _id: userOneId,
+  name: 'Mike',
+  email: 'mike@example.com',
+  password: '56what!!',
+  tokens: [{
+      token: jwt.sign({ _id: userOneId }, process.env.JWT_SECRET)
+  }]
+}
+
+const userTwoId = new mongoose.Types.ObjectId()
+const userTwo = {
+    _id: userTwoId,
+    name: 'Jess',
+    email: 'jess@example.com',
+    password: 'myhouse099@@',
+    tokens: [{
+        token: jwt.sign({ _id: userTwoId }, process.env.JWT_SECRET)
+    }]
+}
+
+const taskOne = {
+    _id: new mongoose.Types.ObjectId(),
+    description: 'First task',
+    completed: false,
+    owner: userOne._id
+}
+
+const taskTwo = {
+    _id: new mongoose.Types.ObjectId(),
+    description: 'Second task',
+    completed: true,
+    owner: userOne._id
+}
+
+const taskThree = {
+    _id: new mongoose.Types.ObjectId(),
+    description: 'Third task',
+    completed: true,
+    owner: userTwo._id
+}
+
+const setupDatabase = async () => {
+  await User.deleteMany()
+  await Task.deleteMany()
+  await new User(userOne).save()
+  await new User(userTwo).save()
+  await new Task(taskOne).save()
+  await new Task(taskTwo).save()
+  await new Task(taskThree).save()
+}
+
+module.exports = {
+  userOneId,
+  userOne,
+  userTwoId,
+  userTwo,
+  taskOne,
+  taskTwo,
+  taskThree,
+  setupDatabase
+}
+```
+
+```javascript
+// /src/tests/task.test.js
+const request = require('supertest')
+const app = require('../src/app')
+const Task = require('../src/models/task')
+const {
+  userOneId,
+  userOne,
+  userTwoId,
+  userTwo,
+  taskOne,
+  taskTwo,
+  taskThree,
+  setupDatabase
+} = require('./fixtures/db')
+
+beforeEach(setupDatabase)
+
+test('Should fetch user tasks', async () => {
+  const response = await request(app)
+    .get('/tasks')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .send()
+    .expect(200)
+  expect(response.body.length).toEqual(2)
+})
+
+test('Should not delete other users tasks', async () => {
+  const response = await request(app)
+    .delete(`/tasks/${taskOne._id}`)
+    .set('Authorization', `Bearer ${userTwo.tokens[0].token}`)
+    .send()
+    .expect(404)
+  const task = await Task.findById(taskOne._id)
+  expect(task).not.toBeNull()
 })
 ```
 
