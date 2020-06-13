@@ -94,6 +94,7 @@
     - [Authenticating Task Endpoints](#authenticating-task-endpoints)
     - [Cascade Delete Tasks](#cascade-delete-tasks)
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
+    - [Working with Timestamps](#working-with-timestamps)
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
   - [**Section 16: Testing Node.js (Task App)**](#section-16-testing-nodejs-task-app)
@@ -3162,6 +3163,41 @@ userSchema.pre('remove', async function (next) {
 **[⬆ back to top](#table-of-contents)**
 
 ## **Section 13: Sorting, Pagination, and Filtering (Task App)**
+
+### Working with Timestamps
+
+
+```javascript
+const mongoose = require('mongoose')
+const validator = require('validator')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const Task = require('./task')
+
+const userSchema = new mongoose.Schema({
+  ...
+}, {
+  timestamps: true
+})
+
+const User = mongoose.model('User', userSchema)
+
+module.exports = User
+```
+
+```javascript
+const mongoose = require('mongoose')
+
+const taskSchema = new mongoose.Schema({ 
+  ...
+}, {
+  timestamps: true
+})
+
+const Task = mongoose.model('Task', taskSchema)
+
+module.exports = Task
+```
 
 **[⬆ back to top](#table-of-contents)**
 
