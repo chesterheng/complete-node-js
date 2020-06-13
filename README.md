@@ -120,6 +120,7 @@
     - [Jest Setup and Teardown](#jest-setup-and-teardown)
     - [Testing with Authentication](#testing-with-authentication)
     - [Advanced Assertions](#advanced-assertions)
+    - [Mocking Libraries](#mocking-libraries)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
@@ -3974,6 +3975,25 @@ test('Should delete account for user', async () => {
   const user = await User.findById(userOneId)
   expect(user).toBeNull()
 })
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Mocking Libraries
+
+[Manual Mocks](https://jestjs.io/docs/en/manual-mocks)
+
+Mocking - replace the real functions that run with functions that you create when we're running in a test environment
+
+```javascript
+module.exports = {
+  setApiKey() {
+
+  },
+  send() {
+
+  }
+} 
 ```
 
 **[⬆ back to top](#table-of-contents)**
