@@ -110,6 +110,7 @@
     - [Exploring SendGrid](#exploring-sendgrid)
     - [Sending Welcome and Cancelation Emails](#sending-welcome-and-cancelation-emails)
     - [Environment Variables](#environment-variables)
+    - [Creating a Production MongoDB Database](#creating-a-production-mongodb-database)
   - [**Section 16: Testing Node.js (Task App)**](#section-16-testing-nodejs-task-app)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
@@ -1756,6 +1757,7 @@ weatherForm.addEventListener('submit', event => {
 ```console
 heroku -v
 heroku login
+heroku logs
 ```
 
 **[⬆ back to top](#table-of-contents)**
@@ -3612,6 +3614,21 @@ router.delete('/users/me', auth, async (req, res) => {
   ...
 }
 ```
+
+### Creating a Production MongoDB Database
+
+[MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+[Connect via Compass](https://docs.atlas.mongodb.com/compass-connection/)
+
+Create a new Cluster
+
+- Cloud Provider & Region: AWS, Singapore (ap-southeast-1)
+
+Cluster0
+
+- Click CONNECT
+
+**[⬆ back to top](#table-of-contents)**
 
 ## **Section 16: Testing Node.js (Task App)**
 
