@@ -102,6 +102,7 @@
     - [Adding Support for File Uploads](#adding-support-for-file-uploads)
     - [Validating File Uploads](#validating-file-uploads)
     - [Validation Challenge](#validation-challenge)
+    - [Handling Express Errors](#handling-express-errors)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
   - [**Section 16: Testing Node.js (Task App)**](#section-16-testing-nodejs-task-app)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
@@ -3366,6 +3367,18 @@ const upload = multer({
 
 router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
   res.send()
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Handling Express Errors
+
+```javascript
+router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
+  res.send()
+}, (error, req, res, next) => {
+  res.status(400).send({ error: error.message })
 })
 ```
 
