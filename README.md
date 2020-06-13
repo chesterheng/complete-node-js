@@ -104,6 +104,7 @@
     - [Validation Challenge](#validation-challenge)
     - [Handling Express Errors](#handling-express-errors)
     - [Adding Images to User Profile](#adding-images-to-user-profile)
+    - [Serving up Files](#serving-up-files)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
   - [**Section 16: Testing Node.js (Task App)**](#section-16-testing-nodejs-task-app)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
@@ -3436,6 +3437,27 @@ router.delete('/users/me/avatar', auth, async (req, res) => {
 </body>
 </html>
 ```
+
+### Serving up Files
+
+```javascript
+router.get('/users/:id/avatar', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+
+    if (!user || !user.avatar) {
+      throw new Error()
+    }
+
+    res.set('Content-Type', 'image/jpg')
+    res.send(user.avatar)
+  } catch (e) {
+    res.status(404).send()
+  }
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
 
 ## **Section 15: Sending Emails (Task App)**
 
