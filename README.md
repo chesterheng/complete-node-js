@@ -105,6 +105,7 @@
     - [Handling Express Errors](#handling-express-errors)
     - [Adding Images to User Profile](#adding-images-to-user-profile)
     - [Serving up Files](#serving-up-files)
+    - [Auto-Cropping and Image Formatting](#auto-cropping-and-image-formatting)
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
   - [**Section 16: Testing Node.js (Task App)**](#section-16-testing-nodejs-task-app)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
@@ -3455,6 +3456,52 @@ router.get('/users/:id/avatar', async (req, res) => {
     res.status(404).send()
   }
 })
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Auto-Cropping and Image Formatting
+
+[sharp](https://github.com/lovell/sharp)
+
+```javascript
+const sharp = require('sharp')
+router.post('/users/me/avatar', auth, 
+  upload.single('avatar'), async (req, res) => {
+    const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
+
+    req.user.avatar = buffer
+    await req.user.save()
+    res.send()
+  }, (error, req, res, next) => {
+    res.status(400).send({ error: error.message })
+})
+
+router.get('/users/:id/avatar', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+
+    if (!user || !user.avatar) {
+      throw new Error()
+    }
+
+    res.set('Content-Type', 'image/png')
+    res.send(user.avatar)
+  } catch (e) {
+    res.status(404).send()
+  }
+})
+
+userSchema.methods.toJSON = function () {
+  const user = this
+  const userObject = user.toObject()
+
+  delete userObject.password
+  delete userObject.tokens
+  delete userObject.avatar
+
+  return userObject
+}
 ```
 
 **[⬆ back to top](#table-of-contents)**
