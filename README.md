@@ -113,6 +113,7 @@
     - [Creating a Production MongoDB Database](#creating-a-production-mongodb-database)
   - [**Section 16: Testing Node.js (Task App)**](#section-16-testing-nodejs-task-app)
     - [Jest Testing Framework](#jest-testing-framework)
+    - [Writing Tests and Assertions](#writing-tests-and-assertions)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
@@ -3654,6 +3655,28 @@ test('Hello world!', () => {
 
 test('This should fail', () => {
     throw new Error('Failure!')
+})
+```
+
+```console
+npm test
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Writing Tests and Assertions
+
+```javascript
+const { calculateTip } = require('../src/math')
+
+test('Should calculate total with tip', () => {
+  const total = calculateTip(10, .3)
+  expect(total).toBe(13)
+})
+
+test('Should calculate total with default tip', () => {
+  const total = calculateTip(10)
+  expect(total).toBe(12.5)
 })
 ```
 
