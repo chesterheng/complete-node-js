@@ -127,6 +127,7 @@
     - [Extra Test Ideas](#extra-test-ideas)
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
     - [Creating the Chat App Project](#creating-the-chat-app-project)
+    - [WebSockets](#websockets)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
 ## **Section 1: Welcome**
@@ -4294,6 +4295,16 @@ app.listen(port, () => {
   console.log(`Server is up on port ${port}!`)
 })
 ```
+
+**[⬆ back to top](#table-of-contents)**
+
+### WebSockets
+
+[WebSockets](https://github.com/chesterheng/web-platform/blob/master/websockets.md)
+
+- WebSockets allows for full-duplex communication
+- WebSocket is a separate protocol from HTTP
+- Persistent connection between client and server
 
 **[⬆ back to top](#table-of-contents)**
 
