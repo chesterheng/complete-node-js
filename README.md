@@ -128,6 +128,7 @@
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
     - [Creating the Chat App Project](#creating-the-chat-app-project)
     - [WebSockets](#websockets)
+    - [Getting Started with Socket.io](#getting-started-with-socketio)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
 ## **Section 1: Welcome**
@@ -4305,6 +4306,65 @@ app.listen(port, () => {
 - WebSockets allows for full-duplex communication
 - WebSocket is a separate protocol from HTTP
 - Persistent connection between client and server
+
+**[⬆ back to top](#table-of-contents)**
+
+### Getting Started with Socket.io
+
+- [socket.io-client](https://github.com/socketio/socket.io-client)
+- [CDN](https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js)
+- [socket.io](https://socket.io/)
+- [socket.io Github](https://github.com/socketio/socket.io)
+
+chat-app
+
+-  public/index.html
+-  public/js/chat.js
+-  src/index.js
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+
+  </head>
+  <body>
+    Chat App
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/chat.js"></script>
+  </body>
+</html>
+```
+
+```javascript
+// public/js/chat.js
+io()
+```
+
+```javascript
+// src/index.js
+const path = require('path')
+const http = require('http')
+const express = require('express')
+const socketio = require('socket.io')
+
+const app = express()
+const server = http.createServer(app)
+const io = socketio(server)
+
+const port = process.env.PORT || 3000
+const publicDirectoryPath = path.join(__dirname, '../public')
+
+app.use(express.static(publicDirectoryPath))
+
+io.on('connection', () => {
+  console.log('New WebSocket connection')
+})
+
+server.listen(port, () => {
+  console.log(`Server is up on port ${port}!`)
+})
+```
 
 **[⬆ back to top](#table-of-contents)**
 
