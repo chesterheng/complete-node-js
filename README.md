@@ -132,6 +132,7 @@
     - [Socket.io Events](#socketio-events)
     - [Broadcasting Events](#broadcasting-events)
     - [Sharing Your Location](#sharing-your-location)
+    - [Event Acknowledgements](#event-acknowledgements)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
 ## **Section 1: Welcome**
@@ -4496,6 +4497,72 @@ io.on('connection', socket => {
   socket.on('sendLocation', (coords) => {
     io.emit('message', `https://google.com/maps?q=${coords.latitude},${coords.longitude}`)
   })
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Event Acknowledgements
+
+[bad-words](https://github.com/web-mech/badwords)
+
+```javascript
+const socket = io()
+
+socket.on('message', message => console.log(message))
+
+document
+  .querySelector('#message-form')
+  .addEventListener('submit', event => {
+    event.preventDefault()
+
+    const message = event.target.elements.message.value
+    
+    socket.emit('sendMessage', message, error => {
+      if (error) {
+        return console.log(error)
+      }
+      console.log('Message delivered!')
+  })
+})
+
+document
+  .querySelector('#send-location')
+  .addEventListener('click', () => {
+    if (!navigator.geolocation) {
+      return alert('Geolocation is not supported by your browser.')
+    }
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      socket.emit('sendLocation', {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      }, () => {
+        console.log('Location shared!')
+      })
+    })
+})
+```
+
+```javascript
+io.on('connection', socket => {  
+  socket.on('sendMessage', (message, callback) => {
+    const filter = new Filter()
+    if (filter.isProfane(message)) {
+      return callback('Profanity is not allowed!')
+    }
+    io.emit('message', message)
+    callback()
+  })
+
+  socket.on('sendLocation', (coords, callback) => {
+    io.emit('message', `https://google.com/maps?q=${coords.latitude},${coords.longitude}`)
+    callback()
+  })
+})
+
+server.listen(port, () => {
+  console.log(`Server is up on port ${port}!`)
 })
 ```
 
