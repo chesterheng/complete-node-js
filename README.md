@@ -7,12 +7,19 @@
   - [**Section 1: Welcome**](#section-1-welcome)
   - [**Section 2: Installing and Exploring Node.js**](#section-2-installing-and-exploring-nodejs)
   - [**Section 3: Node.js Module System (Notes App)**](#section-3-nodejs-module-system-notes-app)
+    <details>
+    <summary>Click to view all steps</summary>
+    
     - [Importing Node.js Core Modules](#importing-nodejs-core-modules)
     - [Importing Your Own Files](#importing-your-own-files)
     - [Importing npm Modules](#importing-npm-modules)
     - [Printing in Color](#printing-in-color)
     - [Global npm Modules and nodemon](#global-npm-modules-and-nodemon)
+    </details>
   - [**Section 4: File System and Command Line Args (Notes App)**](#section-4-file-system-and-command-line-args-notes-app)
+    <details>
+    <summary>Click to view all steps</summary>
+
     - [Getting Input from Users](#getting-input-from-users)
     - [Argument Parsing with Yargs](#argument-parsing-with-yargs)
     - [Storing Data with JSON](#storing-data-with-json)
@@ -21,9 +28,17 @@
     - [ES6 Aside: Arrow Functions](#es6-aside-arrow-functions)
     - [Refactoring to Use Arrow Functions](#refactoring-to-use-arrow-functions)
     - [Reading a Note](#reading-a-note)
+    </details>
   - [**Section 5: Debugging Node.js (Notes Apps)**](#section-5-debugging-nodejs-notes-apps)
+    <details>
+    <summary>Click to view all steps</summary>
+
     - [Debugging Node.js](#debugging-nodejs)
+    </details>
   - [**Section 6: Asynchronous Node.js (Weather App)**](#section-6-asynchronous-nodejs-weather-app)
+    <details>
+    <summary>Click to view all steps</summary>
+
     - [Asynchronous Basics](#asynchronous-basics)
     - [Call Stack, Callback Queue, and Event Loop](#call-stack-callback-queue-and-event-loop)
     - [Making HTTP Requests](#making-http-requests)
@@ -34,7 +49,11 @@
     - [Callback Abstraction](#callback-abstraction)
     - [Callback Chaining](#callback-chaining)
     - [HTTP Requests Without a Library](#http-requests-without-a-library)
+    </details>
   - [**Section 7: Web Servers (Weather App)**](#section-7-web-servers-weather-app)
+    <details>
+    <summary>Click to view all steps</summary>
+
     - [Hello Express](#hello-express)
     - [Serving up HTML and JSON](#serving-up-html-and-json)
     - [Serving up Static Assets](#serving-up-static-assets)
@@ -43,19 +62,31 @@
     - [Customizing the Views Directory](#customizing-the-views-directory)
     - [Advanced Templating](#advanced-templating)
     - [404 Pages](#404-pages)
+    </details>
   - [**Section 8: Accessing API from Browser (Weather App)**](#section-8-accessing-api-from-browser-weather-app)
+    <details>
+    <summary>Click to view all steps</summary>
+
     - [The Query String](#the-query-string)
     - [Building a JSON HTTP Endpoint](#building-a-json-http-endpoint)
     - [ES6 Aside: Default Function Parameters](#es6-aside-default-function-parameters)
     - [Browser HTTP Requests with Fetch](#browser-http-requests-with-fetch)
     - [Creating a Search Form](#creating-a-search-form)
     - [Wiring up the User Interface](#wiring-up-the-user-interface)
+    </details>
   - [**Section 9: Application Deployment (Weather App)**](#section-9-application-deployment-weather-app)
+    <details>
+    <summary>Click to view all steps</summary>
+
     - [Joining Heroku](#joining-heroku)
     - [Exploring Git](#exploring-git)
     - [Setting up SSH Keys](#setting-up-ssh-keys)
     - [Deploying Node.js to Heroku](#deploying-nodejs-to-heroku)
+    </details>
   - [**Section 10: MongoDB and Promises (Task App)**](#section-10-mongodb-and-promises-task-app)
+    <details>
+    <summary>Click to view all steps</summary>
+
     - [MongoDB and NoSQL Databases](#mongodb-and-nosql-databases)
     - [Installing MongoDB on macOS and Linux](#installing-mongodb-on-macos-and-linux)
     - [Installing Database GUI Viewer](#installing-database-gui-viewer)
@@ -66,7 +97,11 @@
     - [Promises](#promises)
     - [Updating Documents](#updating-documents)
     - [Deleting Documents](#deleting-documents)
+    </details>
   - [**Section 11: REST APIs and Mongoose (Task App)**](#section-11-rest-apis-and-mongoose-task-app)
+    <details>
+    <summary>Click to view all steps</summary>
+
     - [Setting up Mongoose](#setting-up-mongoose)
     - [Creating a Mongoose Model](#creating-a-mongoose-model)
     - [Data Validation and Sanitization](#data-validation-and-sanitization)
@@ -79,7 +114,11 @@
     - [Resource Updating Endpoints](#resource-updating-endpoints)
     - [Resource Deleting Endpoints](#resource-deleting-endpoints)
     - [Separate Route Files](#separate-route-files)
+    </details>
   - [**Section 12: API Authentication and Security (Task App)**](#section-12-api-authentication-and-security-task-app)
+    <details>
+    <summary>Click to view all steps</summary>
+
     - [Securely Storing Passwords](#securely-storing-passwords)
     - [Logging in Users](#logging-in-users)
     - [JSON Web Tokens](#json-web-tokens)
@@ -93,12 +132,20 @@
     - [The User/Task Relationship](#the-usertask-relationship)
     - [Authenticating Task Endpoints](#authenticating-task-endpoints)
     - [Cascade Delete Tasks](#cascade-delete-tasks)
+    </details>
   - [**Section 13: Sorting, Pagination, and Filtering (Task App)**](#section-13-sorting-pagination-and-filtering-task-app)
+    <details>
+    <summary>Click to view all steps</summary>
+
     - [Working with Timestamps](#working-with-timestamps)
     - [Filtering Data](#filtering-data)
     - [Paginating Data](#paginating-data)
     - [Sorting Data](#sorting-data)
+    </details>
   - [**Section 14: File Uploads (Task App)**](#section-14-file-uploads-task-app)
+    <details>
+    <summary>Click to view all steps</summary>
+
     - [Adding Support for File Uploads](#adding-support-for-file-uploads)
     - [Validating File Uploads](#validating-file-uploads)
     - [Validation Challenge](#validation-challenge)
@@ -106,12 +153,20 @@
     - [Adding Images to User Profile](#adding-images-to-user-profile)
     - [Serving up Files](#serving-up-files)
     - [Auto-Cropping and Image Formatting](#auto-cropping-and-image-formatting)
+    </details>
   - [**Section 15: Sending Emails (Task App)**](#section-15-sending-emails-task-app)
+    <details>
+    <summary>Click to view all steps</summary>
+
     - [Exploring SendGrid](#exploring-sendgrid)
     - [Sending Welcome and Cancelation Emails](#sending-welcome-and-cancelation-emails)
     - [Environment Variables](#environment-variables)
     - [Creating a Production MongoDB Database](#creating-a-production-mongodb-database)
+    </details>
   - [**Section 16: Testing Node.js (Task App)**](#section-16-testing-nodejs-task-app)
+    <details>
+    <summary>Click to view all steps</summary>
+    
     - [Jest Testing Framework](#jest-testing-framework)
     - [Writing Tests and Assertions](#writing-tests-and-assertions)
     - [Writing Your Own Tests](#writing-your-own-tests)
@@ -125,7 +180,11 @@
     - [Setup Task Test Suite](#setup-task-test-suite)
     - [Testing with Task Data](#testing-with-task-data)
     - [Extra Test Ideas](#extra-test-ideas)
+    </details>
   - [**Section 17: Real-Time Web Applications with Socket.io (Chat App)**](#section-17-real-time-web-applications-with-socketio-chat-app)
+    <details>
+    <summary>Click to view all steps</summary>
+
     - [Creating the Chat App Project](#creating-the-chat-app-project)
     - [WebSockets](#websockets)
     - [Getting Started with Socket.io](#getting-started-with-socketio)
@@ -134,6 +193,7 @@
     - [Sharing Your Location](#sharing-your-location)
     - [Event Acknowledgements](#event-acknowledgements)
     - [Form and Button States](#form-and-button-states)
+    </details>
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
 ## **Section 1: Welcome**
