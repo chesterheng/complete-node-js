@@ -11,6 +11,9 @@ const $messages = document.querySelector('#messages')
 const messageTemplate = document.querySelector('#message-template').innerHTML
 const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML
 
+// Options
+const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
+
 socket.on('message', message => {
   console.log(message)
   const html = Mustache.render(messageTemplate, {
@@ -49,19 +52,21 @@ $messageForm.addEventListener('submit', event => {
 })
 
 $sendLocationButton.addEventListener('click', () => {
-    if (!navigator.geolocation) {
-      return alert('Geolocation is not supported by your browser.')
-    }
+  if (!navigator.geolocation) {
+    return alert('Geolocation is not supported by your browser.')
+  }
 
-    $sendLocationButton.setAttribute('disabled', 'disabled')
+  $sendLocationButton.setAttribute('disabled', 'disabled')
 
-    navigator.geolocation.getCurrentPosition((position) => {
-      socket.emit('sendLocation', {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      }, () => {
-        $sendLocationButton.removeAttribute('disabled')
-        console.log('Location shared!')
-      })
+  navigator.geolocation.getCurrentPosition((position) => {
+    socket.emit('sendLocation', {
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude
+    }, () => {
+      $sendLocationButton.removeAttribute('disabled')
+      console.log('Location shared!')
     })
+  })
 })
+
+socket.emit('join', { username, room })
