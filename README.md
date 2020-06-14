@@ -129,6 +129,7 @@
     - [Creating the Chat App Project](#creating-the-chat-app-project)
     - [WebSockets](#websockets)
     - [Getting Started with Socket.io](#getting-started-with-socketio)
+    - [Socket.io Events](#socketio-events)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
 ## **Section 1: Welcome**
@@ -4357,12 +4358,66 @@ const publicDirectoryPath = path.join(__dirname, '../public')
 
 app.use(express.static(publicDirectoryPath))
 
+// one connection per client
 io.on('connection', () => {
   console.log('New WebSocket connection')
 })
 
 server.listen(port, () => {
   console.log(`Server is up on port ${port}!`)
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Socket.io Events
+
+Emit 
+| Client  | Server  | Event        | Message                       |
+| ------- | ------- | ------------ | ----------------------------- |
+| emit    | receive | connection   | New WebSocket connection      |
+| receive | emit    | countUpdated | The count has been updated! 0 |
+| emit    | receive | increment    | count = 1                     |
+| receive | emit    | countUpdated | The count has been updated! 1 |
+
+| Client 1 | Client 2 | Server  | Event        | Message                       |
+| -------- | -------- | ------- | ------------ | ----------------------------- |
+| emit     |          | receive | connection   | New WebSocket connection      |
+|          | emit     | receive | connection   | New WebSocket connection      |
+| receive  | receive  | emit    | countUpdated | The count has been updated! 0 |
+| emit     |          | receive | increment    | count = 1                     |
+| receive  | receive  | emit    | countUpdated | The count has been updated! 1 |
+
+```javascript
+...
+let count = 0
+
+io.on('connection', socket => {
+  console.log('New WebSocket connection')
+
+  socket.emit('countUpdated', count)
+
+  socket.on('increment', () => {
+    count++
+    io.emit('countUpdated', count)
+  })
+})
+
+server.listen(port, () => {
+  console.log(`Server is up on port ${port}!`)
+})
+```
+
+```javascript
+const socket = io()
+
+socket.on('countUpdated', count => {
+  console.log('The count has been updated!', count)
+})
+
+document.querySelector('#increment').addEventListener('click', () => {
+  console.log('Clicked')
+  socket.emit('increment')
 })
 ```
 
