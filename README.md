@@ -130,6 +130,7 @@
     - [WebSockets](#websockets)
     - [Getting Started with Socket.io](#getting-started-with-socketio)
     - [Socket.io Events](#socketio-events)
+    - [Broadcasting Events](#broadcasting-events)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
 ## **Section 1: Welcome**
@@ -4418,6 +4419,28 @@ socket.on('countUpdated', count => {
 document.querySelector('#increment').addEventListener('click', () => {
   console.log('Clicked')
   socket.emit('increment')
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Broadcasting Events
+
+```javascript
+...
+io.on('connection', socket => {
+  console.log('New WebSocket connection')
+  
+  socket.emit('message', 'Welcome!')
+  socket.broadcast.emit('message', 'A new user has joined!')
+  
+  socket.on('sendMessage', message => {
+    io.emit('message', message)
+  })
+
+  socket.on('disconnect', () => {
+    io.emit('message', 'A user has left!')
+  })
 })
 ```
 
