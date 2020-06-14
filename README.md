@@ -131,6 +131,7 @@
     - [Getting Started with Socket.io](#getting-started-with-socketio)
     - [Socket.io Events](#socketio-events)
     - [Broadcasting Events](#broadcasting-events)
+    - [Sharing Your Location](#sharing-your-location)
   - [**Section 18: Wrapping Up**](#section-18-wrapping-up)
 
 ## **Section 1: Welcome**
@@ -4440,6 +4441,60 @@ io.on('connection', socket => {
 
   socket.on('disconnect', () => {
     io.emit('message', 'A user has left!')
+  })
+})
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Sharing Your Location
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat App</title>
+  </head>
+  <body>
+    <h1>Chat App</h1>
+    <form id="message-form">
+      <input name="message" placeholder="Message">
+      <button>Send</button>
+    </form>
+    <button id="send-location">Send location</button>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/chat.js"></script>
+  </body>
+</html>
+```
+
+```javascript
+const socket = io()
+
+document
+  .querySelector('#send-location')
+  .addEventListener('click', () => {
+    if (!navigator.geolocation) {
+      return alert('Geolocation is not supported by your browser.')
+    }
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      socket.emit('sendLocation', {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      })
+    })
+})
+```
+
+```javascript
+io.on('connection', socket => {
+  console.log('New WebSocket connection')
+
+  socket.on('sendLocation', (coords) => {
+    io.emit('message', `https://google.com/maps?q=${coords.latitude},${coords.longitude}`)
   })
 })
 ```
